@@ -4,6 +4,7 @@ import { Seo } from "@/components/seo";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { MarkdownContent } from "@/components/markdown-content";
+import { KnowledgeTypeBadge } from "@/components/knowledge/type-badge";
 import {
   getAllKnowledgeMeta,
   getKnowledgePost,
@@ -29,7 +30,7 @@ export const getStaticProps: GetStaticProps<Props> = async (ctx) => {
 export default function KnowledgeDetailPage({ post }: Props) {
   return (
     <>
-      <Seo title={post.title} description={post.summary} />
+      <Seo title={post.title} description={post.summary ?? undefined} />
 
       <div className="space-y-6">
         <div className="space-y-2">
@@ -43,6 +44,9 @@ export default function KnowledgeDetailPage({ post }: Props) {
           <p className="text-xs text-[hsl(var(--muted-foreground))]">
             {post.date || "—"}
           </p>
+          <div className="pt-2">
+            <KnowledgeTypeBadge type={post.type} />
+          </div>
           {post.tags.length ? (
             <div className="flex flex-wrap gap-2 pt-2">
               {post.tags.map((t) => (
