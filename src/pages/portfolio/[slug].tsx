@@ -4,6 +4,7 @@ import { Seo } from "@/components/seo";
 import { portfolio, type PortfolioItem } from "@/content/portfolio";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
+import Image from "next/image"; // 添加这行导入
 
 type Props = { item: PortfolioItem };
 
@@ -25,9 +26,7 @@ export const getStaticProps: GetStaticProps<Props> = async (ctx) => {
 };
 
 export default function PortfolioDetailPage({ item }: Props) {
-  const colorVar = categoryColor(item.category);
   const galleryItems = item.images ?? [item.title, item.title, item.title];
-
   return (
     <>
       <Seo title={item.title} description={item.summary} />
@@ -40,16 +39,8 @@ export default function PortfolioDetailPage({ item }: Props) {
           >
             ← Back to portfolio
           </Link>
-          <div className="space-y-2 rounded-3xl border border-[hsl(var(--border))] bg-[hsl(var(--card))] p-8 shadow-sm">
-            <div className="flex flex-wrap items-center gap-3">
-              <span className="rounded-full bg-[hsl(var(--muted))] px-3 py-1 text-xs uppercase tracking-[0.18em] text-[hsl(var(--muted-foreground))]">
-                {item.category}
-              </span>
-              <span className="rounded-full bg-[hsl(var(--primary))] px-3 py-1 text-xs font-medium text-[hsl(var(--primary-foreground))]">
-                {item.timeframe}
-              </span>
-            </div>
-            <h1 className="text-4xl font-semibold tracking-tight sm:text-5xl">
+          <div className="space-y-2 bg-[hsl(var(--card))]">
+            <h1 className="text-4xl mt-5 font-semibold tracking-tight sm:text-5xl">
               {item.title}
             </h1>
             <p className="max-w-3xl text-sm leading-7 text-[hsl(var(--muted-foreground))]">
@@ -79,34 +70,11 @@ export default function PortfolioDetailPage({ item }: Props) {
         <section className="space-y-4">
           <div className="grid gap-4 xl:grid-cols-[2fr_1fr]">
             <div className="space-y-6">
-              <Card className="overflow-hidden">
-                <div
-                  className="h-72 bg-size-[220%] bg-center bg-no-repeat"
-                  style={{
-                    backgroundImage: `linear-gradient(135deg, hsl(var(${colorVar})) 0%, hsla(var(${colorVar}), 0.25) 35%, transparent 100%)`,
-                  }}
-                >
-                  <div className="flex h-full flex-col justify-end p-6">
-                    <div className="rounded-3xl bg-black/20 p-4 text-white backdrop-blur-sm">
-                      <p className="text-xs uppercase tracking-[0.2em] text-white/80">
-                        Project Snapshot
-                      </p>
-                      <p className="mt-2 text-xl font-semibold leading-tight">
-                        Visual communication and interactive detail panels.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </Card>
-
               <Card>
                 <div className="space-y-5 p-6">
                   <div>
                     <p className="text-sm font-semibold uppercase tracking-[0.18em] text-[hsl(var(--muted-foreground))]">
                       Overview
-                    </p>
-                    <p className="mt-3 text-sm leading-7 text-[hsl(var(--muted-foreground))]">
-                      {item.summary}
                     </p>
                   </div>
                   <div className="grid gap-4 sm:grid-cols-3">
@@ -128,6 +96,28 @@ export default function PortfolioDetailPage({ item }: Props) {
                         {item.details.result}
                       </p>
                     </div>
+                  </div>
+                </div>
+              </Card>
+
+              <Card>
+                <div className="space-y-5 p-6">
+                  <div>
+                    <p className="text-sm font-semibold uppercase tracking-[0.18em] text-[hsl(var(--muted-foreground))]">
+                      Retrospective
+                    </p>
+                  </div>
+                  <div className="grid gap-4 sm:grid-cols-3">
+                    {item.retrospective.map((note) => (
+                      <div
+                        key={note}
+                        className="rounded-3xl bg-[hsl(var(--muted))] p-4 text-sm text-[hsl(var(--foreground))]"
+                      >
+                        <div className="text-sm leading-6 text-[hsl(var(--muted-foreground))]">
+                          {note}
+                        </div>
+                      </div>
+                    ))}
                   </div>
                 </div>
               </Card>
@@ -167,56 +157,23 @@ export default function PortfolioDetailPage({ item }: Props) {
           </div>
         </section>
 
-        <section className="space-y-4">
-          <div className="flex items-center justify-between gap-4">
-            <div>
-              <h2 className="text-2xl font-semibold tracking-tight">
-                Retrospective
-              </h2>
-              <p className="text-sm text-[hsl(var(--muted-foreground))]">
-                Lessons learned, optimization points, and future improvements.
-              </p>
-            </div>
-            <div className="rounded-full bg-[hsl(var(--muted))] px-3 py-1 text-xs uppercase tracking-[0.18em] text-[hsl(var(--muted-foreground))]">
-              {item.category}
-            </div>
-          </div>
-          <div className="grid gap-4 sm:grid-cols-2">
-            {item.retrospective.map((note) => (
-              <Card
-                key={note}
-                className="transition-transform duration-300 hover:-translate-y-1"
-              >
-                <div className="p-6 text-sm leading-6 text-[hsl(var(--muted-foreground))]">
-                  {note}
-                </div>
-              </Card>
-            ))}
-          </div>
-        </section>
+        <section className="space-y-4"></section>
 
         <section className="space-y-4">
           <h2 className="text-2xl font-semibold tracking-tight">
             Visual preview
           </h2>
-          <div className="flex gap-4 overflow-x-auto py-2">
+          <div className="py-2">
             {galleryItems.map((title, index) => (
-              <div
-                key={`${title}-${index}`}
-                className="min-w-75 shrink-0 rounded-3xl border border-[hsl(var(--border))] bg-[hsl(var(--card))] p-6 shadow-sm transition-transform duration-300 hover:-translate-y-1"
-                style={{
-                  backgroundImage: `linear-gradient(180deg, hsla(var(${colorVar}), 0.2) 0%, transparent 100%)`,
-                }}
-              >
-                <div className="mb-4 h-40 rounded-3xl bg-[hsl(var(--muted))]" />
-                <p className="text-sm font-semibold text-[hsl(var(--foreground))]">
-                  {item.title}
-                </p>
-                <p className="mt-2 text-xs text-[hsl(var(--muted-foreground))]">
-                  Preview card for project illustration and mobile-friendly
-                  layout.
-                </p>
-              </div>
+              <Image
+                key={index}
+                src={`${title}`}
+                alt={title}
+                className="w-full rounded-lg py-2"
+                width={300}
+                height={200}
+                loading="lazy"
+              />
             ))}
           </div>
         </section>

@@ -85,30 +85,16 @@ export default function PortfolioPage() {
                       >
                         <Card className="overflow-hidden transition-transform duration-300 hover:-translate-y-1 hover:shadow-xl">
                           <div
-                            className="h-48 bg-[length:220%] bg-center bg-no-repeat"
+                            className="h-48 bg-[length:220%] bg-center bg-no-repeat bg-cover"
                             style={{
-                              backgroundImage: `linear-gradient(135deg, hsl(var(${colorVar})) 0%, hsla(var(${colorVar}), 0.18) 40%, transparent 100%)`,
+                              backgroundImage: `url(${item?.images?.[0] || ""})`,
                             }}
-                          >
-                            <div className="flex h-full flex-col justify-between p-5 text-white">
-                              <span className="inline-flex rounded-full bg-black/20 px-3 py-1 text-xs font-medium backdrop-blur-sm">
-                                {item.category}
-                              </span>
-                              <div className="space-y-2">
-                                <p className="text-sm font-semibold leading-tight drop-shadow-sm">
-                                  {item.title}
-                                </p>
-                                <p className="max-w-sm text-xs leading-5 text-white/80">
-                                  {item.summary}
-                                </p>
-                              </div>
-                            </div>
-                          </div>
+                          ></div>
                           <div className="space-y-4 p-5">
                             <div className="flex items-center justify-between gap-3 text-xs text-[hsl(var(--muted-foreground))]">
                               <span>{item.timeframe}</span>
                               <span className="rounded-full bg-[hsl(var(--muted))] px-2.5 py-1 text-[hsl(var(--muted-foreground))]">
-                                {item.role}
+                                {item.title}
                               </span>
                             </div>
                             <p className="text-sm leading-6 text-[hsl(var(--muted-foreground))]">
