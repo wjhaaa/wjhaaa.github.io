@@ -3,25 +3,22 @@ import { Seo } from "@/components/seo";
 import { profile } from "@/content/profile";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { AboutHero } from "@/components/about-hero";
+import { SkillsGrid } from "@/components/skills-grid";
+import { StatsCard } from "@/components/stats-card";
 
 export default function AboutPage() {
   return (
     <>
       <Seo title="About" />
 
-      <div className="space-y-8">
-        <section className="space-y-3">
-          <h1 className="text-3xl font-semibold tracking-tight">
-            {profile.name}
-          </h1>
-          <p className="text-[hsl(var(--muted-foreground))]">{profile.title}</p>
-          <p className="text-sm text-[hsl(var(--muted-foreground))]">
-            {profile.location}
-          </p>
-        </section>
+      <div className="space-y-12">
+        {/* Hero Section */}
+        <AboutHero />
 
-        <section className="grid gap-4 sm:grid-cols-2">
-          <Card>
+        {/* Contact & Skills Section */}
+        <section className="grid gap-4 animate-slideUp sm:grid-cols-2">
+          <Card className="transition-all duration-300 hover:border-[hsl(var(--accent))] hover:shadow-lg">
             <CardHeader className="text-sm font-medium">Contact</CardHeader>
             <CardContent className="space-y-2 text-sm">
               <p className="text-[hsl(var(--muted-foreground))]">
@@ -32,7 +29,7 @@ export default function AboutPage() {
                   <Link
                     key={l.href}
                     href={l.href}
-                    className="text-sm underline underline-offset-4 hover:opacity-80"
+                    className="text-sm underline underline-offset-4 transition-opacity hover:opacity-70"
                     target={l.href.startsWith("http") ? "_blank" : undefined}
                     rel={
                       l.href.startsWith("http")
@@ -47,8 +44,10 @@ export default function AboutPage() {
             </CardContent>
           </Card>
 
-          <Card>
-            <CardHeader className="text-sm font-medium">Skills</CardHeader>
+          <Card className="transition-all duration-300 hover:border-[hsl(var(--accent))] hover:shadow-lg">
+            <CardHeader className="text-sm font-medium">
+              Quick Skills
+            </CardHeader>
             <CardContent className="flex flex-wrap gap-2">
               {profile.skills.map((s) => (
                 <Badge key={s} variant="secondary">
@@ -59,16 +58,37 @@ export default function AboutPage() {
           </Card>
         </section>
 
-        <section className="space-y-3">
-          <h2 className="text-xl font-semibold tracking-tight">Bio</h2>
-          <p className="max-w-3xl text-sm leading-6 text-[hsl(var(--muted-foreground))]">
-            I care about building crisp UI, clear information hierarchy, and
-            sustainable design systems. This site is a lightweight home for my
-            work and learnings.
-          </p>
+        {/* Expertise Section */}
+        <SkillsGrid />
+
+        {/* Stats & Achievements Section */}
+        <StatsCard />
+
+        {/* Bio Section */}
+        <section className="space-y-4 rounded-lg border border-[hsl(var(--border))] bg-[hsl(var(--card))] p-6 animate-slideUp sm:p-8">
+          <h2 className="text-xl font-semibold tracking-tight">About Me</h2>
+          <div className="space-y-4 text-sm leading-7 text-[hsl(var(--muted-foreground))]">
+            <p>
+              I'm a frontend engineer passionate about creating delightful user
+              experiences and sustainable design systems. With over 5 years of
+              experience, I've worked on projects ranging from enterprise-level
+              applications to open-source contributions.
+            </p>
+            <p>
+              My focus areas include component architecture, performance
+              optimization, and building scalable design systems. I believe in
+              writing clean, maintainable code and fostering collaborative team
+              environments.
+            </p>
+            <p>
+              Beyond code, I'm enthusiastic about mentoring junior developers,
+              sharing knowledge through tech talks, and staying updated with the
+              latest web technologies. I'm always eager to learn, experiment,
+              and push the boundaries of what's possible on the web.
+            </p>
+          </div>
         </section>
       </div>
     </>
   );
 }
-

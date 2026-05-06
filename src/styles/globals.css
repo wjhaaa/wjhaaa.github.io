@@ -20,6 +20,27 @@
 
   --card: 0 0% 100%;
   --card-foreground: 222.2 84% 4.9%;
+
+  /* Accent & Semantic Colors */
+  --accent: 262 80% 50%;
+  --accent-foreground: 210 40% 98%;
+
+  --success: 142 71% 45%;
+  --success-foreground: 210 40% 98%;
+
+  --warning: 38 92% 50%;
+  --warning-foreground: 222.2 84% 4.9%;
+
+  --destructive: 0 84% 60%;
+  --destructive-foreground: 210 40% 98%;
+
+  /* Skill Category Colors */
+  --skill-react: 195 82% 53%;
+  --skill-vue: 52 100% 50%;
+  --skill-viz: 271 91% 54%;
+  --skill-tools: 25 95% 53%;
+  --skill-ai: 279 69% 55%;
+  --skill-other: 214 88% 56%;
 }
 
 .dark {
@@ -41,6 +62,27 @@
 
   --card: 222.2 84% 4.9%;
   --card-foreground: 210 40% 98%;
+
+  /* Accent & Semantic Colors (Dark) */
+  --accent: 262 80% 65%;
+  --accent-foreground: 222.2 84% 4.9%;
+
+  --success: 142 71% 55%;
+  --success-foreground: 222.2 84% 4.9%;
+
+  --warning: 38 92% 60%;
+  --warning-foreground: 222.2 84% 4.9%;
+
+  --destructive: 0 84% 70%;
+  --destructive-foreground: 222.2 84% 4.9%;
+
+  /* Skill Category Colors (Dark) */
+  --skill-react: 195 82% 63%;
+  --skill-vue: 52 100% 60%;
+  --skill-viz: 271 91% 64%;
+  --skill-tools: 25 95% 63%;
+  --skill-ai: 279 69% 65%;
+  --skill-other: 214 88% 66%;
 }
 
 html,
@@ -57,3 +99,161 @@ body {
   border-color: hsl(var(--border));
 }
 
+/* Custom Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes pulseGlow {
+  0%,
+  100% {
+    opacity: 1;
+    box-shadow: 0 0 20px rgba(99, 102, 241, 0.3);
+  }
+  50% {
+    opacity: 0.8;
+    box-shadow: 0 0 30px rgba(99, 102, 241, 0.5);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+/* Tailwind Utilities for Animations */
+@layer utilities {
+  .animate-fadeIn {
+    animation: fadeIn 0.6s ease-out;
+  }
+
+  .animate-slideUp {
+    animation: slideUp 0.6s ease-out;
+  }
+
+  .animate-slideInLeft {
+    animation: slideInLeft 0.6s ease-out;
+  }
+
+  .animate-slideInRight {
+    animation: slideInRight 0.6s ease-out;
+  }
+
+  .animate-float {
+    animation: float 3s ease-in-out infinite;
+  }
+
+  .animate-pulseGlow {
+    animation: pulseGlow 2s ease-in-out infinite;
+  }
+
+  /* Staggered animations for list items */
+  .animate-stagger > * {
+    animation: slideUp 0.6s ease-out;
+  }
+
+  .animate-stagger > *:nth-child(1) {
+    animation-delay: 0.05s;
+  }
+
+  .animate-stagger > *:nth-child(2) {
+    animation-delay: 0.1s;
+  }
+
+  .animate-stagger > *:nth-child(3) {
+    animation-delay: 0.15s;
+  }
+
+  .animate-stagger > *:nth-child(4) {
+    animation-delay: 0.2s;
+  }
+
+  .animate-stagger > *:nth-child(5) {
+    animation-delay: 0.25s;
+  }
+
+  .animate-stagger > *:nth-child(6) {
+    animation-delay: 0.3s;
+  }
+
+  /* Gradient text */
+  .bg-gradient-accent {
+    background: linear-gradient(
+      135deg,
+      hsl(var(--accent)) 0%,
+      hsl(262 80% 65%) 100%
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Gradient backgrounds for sections */
+  .bg-gradient-hero {
+    background: linear-gradient(
+      135deg,
+      hsl(var(--background)) 0%,
+      hsl(222.2 84% 4.9% / 0.05) 100%
+    );
+  }
+
+  .dark .bg-gradient-hero {
+    background: linear-gradient(
+      135deg,
+      hsl(var(--background)) 0%,
+      hsl(210 40% 98% / 0.05) 100%
+    );
+  }
+}
