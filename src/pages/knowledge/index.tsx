@@ -444,60 +444,6 @@ export default function KnowledgeIndexPage({ posts }: Props) {
                 </Button>
               </div>
             </div>
-
-            {/* Type Filter */}
-            <div className="flex flex-wrap items-center gap-2">
-              <Button
-                type="button"
-                size="sm"
-                variant={activeType === "all" ? "default" : "outline"}
-                onClick={() => handleTypeChange("all")}
-                className={`rounded-full transition-all ${
-                  activeType === "all"
-                    ? "bg-gradient-to-r from-blue-500 to-indigo-600 text-white shadow-lg shadow-blue-500/25"
-                    : "hover:bg-slate-100 dark:hover:bg-slate-800"
-                }`}
-              >
-                全部
-                <Badge
-                  variant="secondary"
-                  className="ml-2 bg-white/20 text-white"
-                >
-                  {posts.length}
-                </Badge>
-              </Button>
-              {(
-                Object.keys(knowledgeTypes) as Array<
-                  keyof typeof knowledgeTypes
-                >
-              ).map((t) => {
-                const count = typeCounts.get(t) ?? 0;
-                if (!count) return null;
-                const active = activeType === t;
-                return (
-                  <Button
-                    key={t}
-                    type="button"
-                    size="sm"
-                    variant={active ? "default" : "outline"}
-                    onClick={() => handleTypeChange(active ? "all" : t)}
-                    className={`rounded-full transition-all ${
-                      active
-                        ? "bg-gradient-to-r from-blue-500 to-indigo-600 text-white shadow-lg shadow-blue-500/25"
-                        : "hover:bg-slate-100 dark:hover:bg-slate-800"
-                    }`}
-                  >
-                    <KnowledgeTypeBadge type={t} />
-                    <Badge
-                      variant="secondary"
-                      className="ml-2 bg-white/20 text-white"
-                    >
-                      {count}
-                    </Badge>
-                  </Button>
-                );
-              })}
-            </div>
           </header>
 
           <div className="grid gap-6 lg:grid-cols-[280px_1fr]">
