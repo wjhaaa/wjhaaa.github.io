@@ -14,6 +14,37 @@ import {
   type KnowledgeMeta,
 } from "@/lib/knowledge";
 
+function inferTypeFromTitle(title: string) {
+  const lowerTitle = title.toLowerCase();
+
+  if (lowerTitle.includes("项目") || lowerTitle.includes("总结"))
+    return "project";
+  if (
+    lowerTitle.includes("踩坑") ||
+    lowerTitle.includes("问题") ||
+    lowerTitle.includes("报错")
+  )
+    return "pitfall";
+  if (
+    lowerTitle.includes("技巧") ||
+    lowerTitle.includes("方法") ||
+    lowerTitle.includes("秘籍")
+  )
+    return "snippet";
+  if (lowerTitle.includes("规范") || lowerTitle.includes("标准"))
+    return "standard";
+  if (
+    lowerTitle.includes("指南") ||
+    lowerTitle.includes("教程") ||
+    lowerTitle.includes("安装")
+  )
+    return "guide";
+  if (lowerTitle.includes("复盘") || lowerTitle.includes("回顾"))
+    return "retro";
+
+  return "note";
+}
+
 type Props = {
   post: KnowledgePost;
   allPosts: KnowledgeMeta[];
@@ -55,6 +86,9 @@ export default function KnowledgeDetailPage({
   prevPost,
   nextPost,
 }: Props) {
+  const displayType =
+    post.type === "note" ? inferTypeFromTitle(post.title) : post.type;
+
   return (
     <>
       <Seo title={post.title} description={post.summary ?? undefined} />
@@ -77,7 +111,7 @@ export default function KnowledgeDetailPage({
                   {post.date || "—"}
                 </p>
                 <div className="flex items-center gap-2">
-                  <KnowledgeTypeBadge type={post.type} />
+                  <KnowledgeTypeBadge type={displayType} />
                 </div>
               </div>
             </div>

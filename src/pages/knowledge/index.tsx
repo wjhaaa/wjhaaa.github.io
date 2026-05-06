@@ -4,9 +4,23 @@ import { useRouter } from "next/router";
 import type { GetStaticProps } from "next";
 import { Seo } from "@/components/seo";
 import Fuse from "fuse.js";
-import { ChevronDown, ChevronRight, Menu, X } from "lucide-react";
+import {
+  ChevronDown,
+  ChevronRight,
+  Menu,
+  X,
+  Search,
+  Folder,
+  FileText,
+  Tag,
+  Calendar,
+} from "lucide-react";
 
 import { getAllKnowledgeMeta, type KnowledgeMeta } from "@/lib/knowledge";
+
+interface ExtendedKnowledgeMeta extends KnowledgeMeta {
+  displayType?: KnowledgePostType;
+}
 import {
   knowledgeMenu,
   type KnowledgeMenuNode,
@@ -42,6 +56,37 @@ function collectLeafSlugs(node: KnowledgeMenuNode): string[] {
   return node.children.flatMap(collectLeafSlugs);
 }
 
+function inferTypeFromTitle(title: string): KnowledgePostType {
+  const lowerTitle = title.toLowerCase();
+
+  if (lowerTitle.includes("项目") || lowerTitle.includes("总结"))
+    return "project";
+  if (
+    lowerTitle.includes("踩坑") ||
+    lowerTitle.includes("问题") ||
+    lowerTitle.includes("报错")
+  )
+    return "pitfall";
+  if (
+    lowerTitle.includes("技巧") ||
+    lowerTitle.includes("方法") ||
+    lowerTitle.includes("秘籍")
+  )
+    return "snippet";
+  if (lowerTitle.includes("规范") || lowerTitle.includes("标准"))
+    return "standard";
+  if (
+    lowerTitle.includes("指南") ||
+    lowerTitle.includes("教程") ||
+    lowerTitle.includes("安装")
+  )
+    return "guide";
+  if (lowerTitle.includes("复盘") || lowerTitle.includes("回顾"))
+    return "retro";
+
+  return "note";
+}
+
 function flattenMenu(
   nodes: KnowledgeMenuNode[],
   path: string[] = [],
@@ -70,6 +115,17 @@ function flattenMenu(
   return out;
 }
 
+interface CollapsibleTreeMenuProps {
+  nodes: KnowledgeMenuNode[];
+  expandedKeys: Set<string>;
+  onToggle: (key: string) => void;
+  onMenuClick: (hit: MenuHit) => void;
+  activeMenuKey: string;
+  postsBySlug: Map<string, KnowledgeMeta>;
+  depth?: number;
+  parentPath?: string[];
+}
+
 function CollapsibleTreeMenu({
   nodes,
   expandedKeys,
@@ -79,9 +135,9 @@ function CollapsibleTreeMenu({
   postsBySlug,
   depth = 0,
   parentPath = [],
-}: any) {
+}: CollapsibleTreeMenuProps) {
   return (
-    <div className="space-y-1">
+    <div className="space-y-0.5">
       {nodes.map((node: KnowledgeMenuNode) => {
         const nodePath = [...parentPath, node.name];
         const nodeKey = makeKey(nodePath);
@@ -89,7 +145,6 @@ function CollapsibleTreeMenu({
         const isExpanded = expandedKeys.has(nodeKey);
         const isActive = activeMenuKey === nodeKey;
 
-        // Check if node is disabled
         const leafSlugs = collectLeafSlugs(node);
         const resolved = leafSlugs
           .map((s) => {
@@ -116,12 +171,12 @@ function CollapsibleTreeMenu({
         return (
           <div key={nodeKey}>
             <div
-              className={`flex items-center gap-1 rounded-md px-2 py-1.5 transition-colors ${
+              className={`flex items-center gap-2 rounded-lg px-3 py-2 transition-all duration-200 ${
                 isActive
-                  ? "bg-primary text-primary-foreground"
-                  : "hover:bg-muted text-foreground"
-              } ${isDisabled ? "opacity-50 cursor-not-allowed" : "cursor-pointer"}`}
-              style={{ paddingLeft: `${depth * 12 + 8}px` }}
+                  ? "bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-950/20 dark:to-indigo-950/20 text-blue-700 dark:text-blue-300 border-l-2 border-blue-500"
+                  : "hover:bg-slate-50 dark:hover:bg-slate-800/50 text-slate-700 dark:text-slate-300"
+              } ${isDisabled ? "opacity-40 cursor-not-allowed" : "cursor-pointer"}`}
+              style={{ paddingLeft: `${depth * 16 + 12}px` }}
             >
               {hasChildren && (
                 <button
@@ -129,24 +184,42 @@ function CollapsibleTreeMenu({
                     e.stopPropagation();
                     onToggle(nodeKey);
                   }}
-                  className="flex items-center justify-center w-4 h-4 flex-shrink-0 hover:bg-primary/10 rounded transition-colors"
+                  className="flex items-center justify-center w-5 h-5 flex-shrink-0 hover:bg-blue-100 dark:hover:bg-blue-900/30 rounded transition-colors"
                 >
                   {isExpanded ? (
-                    <ChevronDown className="w-3 h-3" />
+                    <ChevronDown className="w-3.5 h-3.5" />
                   ) : (
-                    <ChevronRight className="w-3 h-3" />
+                    <ChevronRight className="w-3.5 h-3.5" />
                   )}
                 </button>
               )}
-              {!hasChildren && <div className="w-4" />}
+              {!hasChildren && (
+                <div className="w-5 flex items-center justify-center">
+                  <FileText className="w-3.5 h-3.5 opacity-50" />
+                </div>
+              )}
               <button
                 onClick={() => !isDisabled && onMenuClick(nodeHit)}
                 disabled={isDisabled}
-                className="flex-1 text-left text-sm font-medium truncate hover:underline focus:outline-none focus:underline"
+                className="flex-1 text-left text-sm font-medium truncate hover:text-blue-600 dark:hover:text-blue-400 focus:outline-none transition-colors"
                 title={node.name}
               >
                 {node.name}
               </button>
+              {!hasChildren && !isDisabled && (
+                <Badge
+                  variant="outline"
+                  className="text-[10px] px-1.5 py-0.5 h-4"
+                >
+                  {inferTypeFromTitle(node.name) === "project" && "项目"}
+                  {inferTypeFromTitle(node.name) === "pitfall" && "踩坑"}
+                  {inferTypeFromTitle(node.name) === "snippet" && "技巧"}
+                  {inferTypeFromTitle(node.name) === "guide" && "指南"}
+                  {inferTypeFromTitle(node.name) === "standard" && "规范"}
+                  {inferTypeFromTitle(node.name) === "retro" && "复盘"}
+                  {inferTypeFromTitle(node.name) === "note" && "笔记"}
+                </Badge>
+              )}
             </div>
 
             {isExpanded && hasChildren && node.children && (
@@ -180,7 +253,6 @@ export default function KnowledgeIndexPage({ posts }: Props) {
   const [q, setQ] = React.useState("");
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
 
-  // Sync state with URL query parameters
   React.useEffect(() => {
     if (!router.isReady) return;
 
@@ -239,10 +311,19 @@ export default function KnowledgeIndexPage({ posts }: Props) {
     [baseSet],
   );
 
-  const results = React.useMemo(() => {
+  const results = React.useMemo((): ExtendedKnowledgeMeta[] => {
     const query = q.trim();
-    if (!query) return baseSet;
-    return fuse.search(query).map((r) => r.item);
+    let displayResults = baseSet;
+
+    if (query) {
+      displayResults = fuse.search(query).map((r) => r.item);
+    }
+
+    return displayResults.map((post) => ({
+      ...post,
+      displayType:
+        post.type === "note" ? inferTypeFromTitle(post.title) : post.type,
+    }));
   }, [baseSet, fuse, q]);
 
   const typeCounts = React.useMemo(() => {
@@ -254,9 +335,9 @@ export default function KnowledgeIndexPage({ posts }: Props) {
   }, [posts]);
 
   const activeMenuTitle = React.useMemo(() => {
-    if (activeMenuKey === "__all__") return "All";
+    if (activeMenuKey === "__all__") return "全部知识";
     const hit = menuHits.find((h) => h.key === activeMenuKey);
-    return hit?.title ?? "All";
+    return hit?.title ?? "全部知识";
   }, [activeMenuKey, menuHits]);
 
   function onMenuClick(hit: MenuHit) {
@@ -319,180 +400,71 @@ export default function KnowledgeIndexPage({ posts }: Props) {
     <>
       <Seo title="Knowledge" />
 
-      <div className="grid gap-6 lg:grid-cols-[320px_1fr]">
-        {/* Desktop Sidebar */}
-        <aside className="hidden lg:block lg:sticky lg:top-20 lg:h-[calc(100dvh-6rem)]">
-          <Card className="h-full overflow-hidden flex flex-col border shadow-sm">
-            <CardHeader className="space-y-2 border-b bg-muted/30">
-              <div className="space-y-1">
-                <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">
-                  菜单导航
-                </p>
-                <p className="text-sm font-medium text-foreground">
-                  {activeMenuTitle}
-                </p>
-                <p className="text-xs text-muted-foreground">
-                  {menuFilter ? `${baseSet.length} 项` : `${posts.length} 项`}
-                </p>
-              </div>
-              <Button
-                type="button"
-                size="sm"
-                variant="outline"
-                className="w-full"
-                onClick={() => {
-                  setActiveMenuKey("__all__");
-                  router.push(
-                    {
-                      pathname: router.pathname,
-                      query: { ...router.query, menu: undefined },
-                    },
-                    undefined,
-                    { shallow: true },
-                  );
-                }}
-              >
-                重置菜单
-              </Button>
-            </CardHeader>
-            <CardContent className="flex-1 overflow-auto py-3 px-2">
-              <nav className="space-y-1">
-                <div
-                  className={`flex items-center gap-2 rounded-md px-2 py-1.5 transition-colors ${
-                    activeMenuKey === "__all__"
-                      ? "bg-primary text-primary-foreground"
-                      : "hover:bg-muted text-foreground cursor-pointer"
-                  }`}
-                  onClick={() => {
-                    setActiveMenuKey("__all__");
-                    router.push(
-                      {
-                        pathname: router.pathname,
-                        query: { ...router.query, menu: undefined },
-                      },
-                      undefined,
-                      { shallow: true },
-                    );
-                  }}
-                >
-                  <span className="text-sm font-medium">全部</span>
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          {/* Header */}
+          <header className="mb-8">
+            <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 mb-6">
+              <div className="flex items-center gap-3">
+                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center shadow-lg">
+                  <Folder className="w-6 h-6 text-white" />
                 </div>
-                <CollapsibleTreeMenu
-                  nodes={knowledgeMenu}
-                  expandedKeys={expandedKeys}
-                  onToggle={handleToggle}
-                  onMenuClick={onMenuClick}
-                  activeMenuKey={activeMenuKey}
-                  postsBySlug={postsBySlug}
-                />
-              </nav>
-            </CardContent>
-          </Card>
-        </aside>
-
-        {/* Mobile Menu Button */}
-        <div className="lg:hidden flex items-center justify-between gap-2 mb-4">
-          <h1 className="text-2xl font-bold">知识库</h1>
-          <Button
-            type="button"
-            size="sm"
-            variant="outline"
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="gap-2"
-          >
-            {mobileMenuOpen ? (
-              <>
-                <X className="w-4 h-4" />
-                隐藏菜单
-              </>
-            ) : (
-              <>
-                <Menu className="w-4 h-4" />
-                显示菜单
-              </>
-            )}
-          </Button>
-        </div>
-
-        {/* Mobile Menu Drawer */}
-        {mobileMenuOpen && (
-          <div className="lg:hidden mb-4">
-            <Card className="border shadow-sm">
-              <CardContent className="py-3 px-2">
-                <nav className="space-y-1 max-h-96 overflow-auto">
-                  <div
-                    className={`flex items-center gap-2 rounded-md px-2 py-1.5 transition-colors ${
-                      activeMenuKey === "__all__"
-                        ? "bg-primary text-primary-foreground"
-                        : "hover:bg-muted text-foreground cursor-pointer"
-                    }`}
-                    onClick={() => {
-                      setActiveMenuKey("__all__");
-                      setMobileMenuOpen(false);
-                      router.push(
-                        {
-                          pathname: router.pathname,
-                          query: { ...router.query, menu: undefined },
-                        },
-                        undefined,
-                        { shallow: true },
-                      );
-                    }}
-                  >
-                    <span className="text-sm font-medium">全部</span>
-                  </div>
-                  <CollapsibleTreeMenu
-                    nodes={knowledgeMenu}
-                    expandedKeys={expandedKeys}
-                    onToggle={handleToggle}
-                    onMenuClick={onMenuClick}
-                    activeMenuKey={activeMenuKey}
-                    postsBySlug={postsBySlug}
-                  />
-                </nav>
-              </CardContent>
-            </Card>
-          </div>
-        )}
-
-        <section className="space-y-6">
-          <header className="space-y-4">
-            <div className="space-y-2">
-              <p className="text-sm text-muted-foreground">
-                一个可搜索的知识库，包含回顾、踩坑、技巧等内容。
-              </p>
-              <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-                <div className="space-y-1">
-                  <h1 className="text-balance text-4xl font-bold tracking-tight">
+                <div>
+                  <h1 className="text-3xl font-bold bg-gradient-to-r from-slate-900 to-slate-700 dark:from-white dark:to-slate-200 bg-clip-text text-transparent">
                     知识库
                   </h1>
-                  <p className="text-sm text-muted-foreground">
-                    筛选:{" "}
-                    <span className="font-semibold">{activeMenuTitle}</span>
+                  <p className="text-sm text-slate-600 dark:text-slate-400">
+                    {posts.length} 篇文章 · 持续更新中
                   </p>
                 </div>
-                <div className="w-full sm:w-[360px]">
+              </div>
+
+              <div className="flex items-center gap-3">
+                <div className="relative flex-1 lg:w-80">
+                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
                   <Input
                     value={q}
                     onChange={(e) => handleSearch(e.target.value)}
-                    placeholder="搜索标题 / 标签 / 摘要…"
-                    aria-label="搜索知识库文章"
+                    placeholder="搜索标题、标签、摘要..."
+                    className="pl-10 h-10 border-slate-200 dark:border-slate-700 focus:ring-2 focus:ring-blue-500/20"
                   />
                 </div>
+                <Button
+                  type="button"
+                  size="icon"
+                  variant="outline"
+                  className="lg:hidden"
+                  onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                >
+                  {mobileMenuOpen ? (
+                    <X className="w-5 h-5" />
+                  ) : (
+                    <Menu className="w-5 h-5" />
+                  )}
+                </Button>
               </div>
             </div>
 
-            {/* Type Filter Buttons */}
-            <div className="flex flex-wrap items-center gap-2 pt-2">
+            {/* Type Filter */}
+            <div className="flex flex-wrap items-center gap-2">
               <Button
                 type="button"
                 size="sm"
                 variant={activeType === "all" ? "default" : "outline"}
                 onClick={() => handleTypeChange("all")}
-                className="transition-colors"
+                className={`rounded-full transition-all ${
+                  activeType === "all"
+                    ? "bg-gradient-to-r from-blue-500 to-indigo-600 text-white shadow-lg shadow-blue-500/25"
+                    : "hover:bg-slate-100 dark:hover:bg-slate-800"
+                }`}
               >
-                全部类型
-                <span className="ml-2 text-xs opacity-70">{posts.length}</span>
+                全部
+                <Badge
+                  variant="secondary"
+                  className="ml-2 bg-white/20 text-white"
+                >
+                  {posts.length}
+                </Badge>
               </Button>
               {(
                 Object.keys(knowledgeTypes) as Array<
@@ -509,67 +481,237 @@ export default function KnowledgeIndexPage({ posts }: Props) {
                     size="sm"
                     variant={active ? "default" : "outline"}
                     onClick={() => handleTypeChange(active ? "all" : t)}
-                    className="gap-2 transition-colors"
+                    className={`rounded-full transition-all ${
+                      active
+                        ? "bg-gradient-to-r from-blue-500 to-indigo-600 text-white shadow-lg shadow-blue-500/25"
+                        : "hover:bg-slate-100 dark:hover:bg-slate-800"
+                    }`}
                   >
                     <KnowledgeTypeBadge type={t} />
-                    <span className="text-xs opacity-70">{count}</span>
+                    <Badge
+                      variant="secondary"
+                      className="ml-2 bg-white/20 text-white"
+                    >
+                      {count}
+                    </Badge>
                   </Button>
                 );
               })}
             </div>
           </header>
 
-          {/* Results Grid */}
-          <div className="grid gap-4">
-            {results.map((p) => (
-              <Card
-                key={p.slug}
-                className="group hover:shadow-md transition-all duration-200 cursor-pointer border hover:border-primary/50"
-                onClick={() => void router.push(`/knowledge/${p.slug}`)}
-              >
-                <CardHeader className="space-y-3">
-                  <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
-                    <Link
-                      href={`/knowledge/${p.slug}`}
-                      className="text-lg font-semibold tracking-tight hover:text-primary transition-colors group-hover:underline"
-                      onClick={(e) => e.stopPropagation()}
-                    >
-                      {p.title}
-                    </Link>
-                    <p className="text-xs text-muted-foreground flex-shrink-0">
-                      {p.date || "—"}
+          <div className="grid gap-6 lg:grid-cols-[280px_1fr]">
+            {/* Desktop Sidebar */}
+            <aside className="hidden lg:block lg:sticky lg:top-6 lg:h-[calc(100vh-8rem)]">
+              <Card className="h-full overflow-hidden flex flex-col border-slate-200 dark:border-slate-800 shadow-sm bg-white/50 dark:bg-slate-900/50 backdrop-blur-sm">
+                <CardHeader className="space-y-3 border-b border-slate-200 dark:border-slate-800 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-950/20 dark:to-indigo-950/20">
+                  <div className="flex items-center gap-2">
+                    <Folder className="w-4 h-4 text-blue-600 dark:text-blue-400" />
+                    <span className="text-sm font-semibold text-slate-900 dark:text-white">
+                      知识导航
+                    </span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <p className="text-xs text-slate-600 dark:text-slate-400">
+                      当前:{" "}
+                      <span className="font-medium text-slate-900 dark:text-white">
+                        {activeMenuTitle}
+                      </span>
                     </p>
+                    <Badge variant="outline" className="text-xs">
+                      {menuFilter ? `${baseSet.length}` : `${posts.length}`}
+                    </Badge>
                   </div>
-                  <div className="flex flex-wrap items-center gap-2">
-                    <KnowledgeTypeBadge type={p.type} />
-                    {p.tags.slice(0, 6).map((t) => (
-                      <Badge key={t} variant="secondary" className="text-xs">
-                        {t}
-                      </Badge>
-                    ))}
-                  </div>
+                  <Button
+                    type="button"
+                    size="sm"
+                    variant="ghost"
+                    className="w-full h-8 text-xs"
+                    onClick={() => {
+                      setActiveMenuKey("__all__");
+                      router.push(
+                        {
+                          pathname: router.pathname,
+                          query: { ...router.query, menu: undefined },
+                        },
+                        undefined,
+                        { shallow: true },
+                      );
+                    }}
+                  >
+                    重置筛选
+                  </Button>
                 </CardHeader>
-                {p.summary && (
-                  <CardContent>
-                    <p className="text-sm leading-relaxed text-muted-foreground line-clamp-2">
-                      {p.summary}
-                    </p>
-                  </CardContent>
-                )}
-              </Card>
-            ))}
-
-            {!results.length && (
-              <Card className="border-dashed">
-                <CardContent className="py-12 text-center">
-                  <p className="text-sm text-muted-foreground">
-                    未找到结果。请尝试调整搜索或筛选条件。
-                  </p>
+                <CardContent className="flex-1 overflow-auto py-4 px-3">
+                  <nav className="space-y-1">
+                    <div
+                      className={`flex items-center gap-2 rounded-lg px-3 py-2 transition-all duration-200 ${
+                        activeMenuKey === "__all__"
+                          ? "bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-950/20 dark:to-indigo-950/20 text-blue-700 dark:text-blue-300 border-l-2 border-blue-500"
+                          : "hover:bg-slate-50 dark:hover:bg-slate-800/50 text-slate-700 dark:text-slate-300 cursor-pointer"
+                      }`}
+                      onClick={() => {
+                        setActiveMenuKey("__all__");
+                        router.push(
+                          {
+                            pathname: router.pathname,
+                            query: { ...router.query, menu: undefined },
+                          },
+                          undefined,
+                          { shallow: true },
+                        );
+                      }}
+                    >
+                      <Folder className="w-4 h-4" />
+                      <span className="text-sm font-medium">全部知识</span>
+                    </div>
+                    <CollapsibleTreeMenu
+                      nodes={knowledgeMenu}
+                      expandedKeys={expandedKeys}
+                      onToggle={handleToggle}
+                      onMenuClick={onMenuClick}
+                      activeMenuKey={activeMenuKey}
+                      postsBySlug={postsBySlug}
+                    />
+                  </nav>
                 </CardContent>
               </Card>
+            </aside>
+
+            {/* Mobile Menu Drawer */}
+            {mobileMenuOpen && (
+              <div className="lg:hidden mb-4">
+                <Card className="border-slate-200 dark:border-slate-800 shadow-sm bg-white/50 dark:bg-slate-900/50 backdrop-blur-sm">
+                  <CardContent className="py-4 px-3">
+                    <nav className="space-y-1 max-h-96 overflow-auto">
+                      <div
+                        className={`flex items-center gap-2 rounded-lg px-3 py-2 transition-all duration-200 ${
+                          activeMenuKey === "__all__"
+                            ? "bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-950/20 dark:to-indigo-950/20 text-blue-700 dark:text-blue-300 border-l-2 border-blue-500"
+                            : "hover:bg-slate-50 dark:hover:bg-slate-800/50 text-slate-700 dark:text-slate-300 cursor-pointer"
+                        }`}
+                        onClick={() => {
+                          setActiveMenuKey("__all__");
+                          setMobileMenuOpen(false);
+                          router.push(
+                            {
+                              pathname: router.pathname,
+                              query: { ...router.query, menu: undefined },
+                            },
+                            undefined,
+                            { shallow: true },
+                          );
+                        }}
+                      >
+                        <Folder className="w-4 h-4" />
+                        <span className="text-sm font-medium">全部知识</span>
+                      </div>
+                      <CollapsibleTreeMenu
+                        nodes={knowledgeMenu}
+                        expandedKeys={expandedKeys}
+                        onToggle={handleToggle}
+                        onMenuClick={onMenuClick}
+                        activeMenuKey={activeMenuKey}
+                        postsBySlug={postsBySlug}
+                      />
+                    </nav>
+                  </CardContent>
+                </Card>
+              </div>
             )}
+
+            {/* Main Content */}
+            <section className="space-y-4">
+              <div className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400">
+                <Tag className="w-4 h-4" />
+                <span>
+                  筛选:{" "}
+                  <span className="font-medium text-slate-900 dark:text-white">
+                    {activeMenuTitle}
+                  </span>
+                </span>
+                <span className="text-slate-300 dark:text-slate-600">·</span>
+                <span>
+                  共{" "}
+                  <span className="font-medium text-slate-900 dark:text-white">
+                    {results.length}
+                  </span>{" "}
+                  篇
+                </span>
+              </div>
+
+              <div className="grid gap-4">
+                {results.map((p) => (
+                  <Card
+                    key={p.slug}
+                    className="group hover:shadow-lg hover:shadow-blue-500/10 transition-all duration-300 cursor-pointer border-slate-200 dark:border-slate-800 hover:border-blue-300 dark:hover:border-blue-700 bg-white/50 dark:bg-slate-900/50 backdrop-blur-sm"
+                    onClick={() => void router.push(`/knowledge/${p.slug}`)}
+                  >
+                    <CardHeader className="space-y-3 pb-3">
+                      <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
+                        <Link
+                          href={`/knowledge/${p.slug}`}
+                          className="text-base font-semibold tracking-tight text-slate-900 dark:text-white hover:text-blue-600 dark:hover:text-blue-400 transition-colors group-hover:underline decoration-blue-500/50"
+                          onClick={(e) => e.stopPropagation()}
+                        >
+                          {p.title}
+                        </Link>
+                        <div className="flex items-center gap-1.5 text-xs text-slate-500 dark:text-slate-400">
+                          <Calendar className="w-3 h-3" />
+                          <span>{p.date || "—"}</span>
+                        </div>
+                      </div>
+                      <div className="flex flex-wrap items-center gap-2">
+                        <KnowledgeTypeBadge type={p.displayType || p.type} />
+                        {p.tags.slice(0, 5).map((t) => (
+                          <Badge
+                            key={t}
+                            variant="secondary"
+                            className="text-xs bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300"
+                          >
+                            {t}
+                          </Badge>
+                        ))}
+                        {p.tags.length > 5 && (
+                          <Badge variant="outline" className="text-xs">
+                            +{p.tags.length - 5}
+                          </Badge>
+                        )}
+                      </div>
+                    </CardHeader>
+                    {p.summary && (
+                      <CardContent className="pt-0">
+                        <p className="text-sm leading-relaxed text-slate-600 dark:text-slate-400 line-clamp-2">
+                          {p.summary}
+                        </p>
+                      </CardContent>
+                    )}
+                  </Card>
+                ))}
+
+                {!results.length && (
+                  <Card className="border-dashed border-slate-300 dark:border-slate-700 bg-white/30 dark:bg-slate-900/30">
+                    <CardContent className="py-16 text-center">
+                      <div className="flex flex-col items-center gap-3">
+                        <div className="w-16 h-16 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center">
+                          <Search className="w-8 h-8 text-slate-400" />
+                        </div>
+                        <div>
+                          <p className="text-sm font-medium text-slate-900 dark:text-white mb-1">
+                            未找到相关内容
+                          </p>
+                          <p className="text-xs text-slate-500 dark:text-slate-400">
+                            试试调整搜索关键词或筛选条件
+                          </p>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                )}
+              </div>
+            </section>
           </div>
-        </section>
+        </div>
       </div>
     </>
   );
