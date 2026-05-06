@@ -1,6 +1,5 @@
- 
 ---
-title: "A开发秘籍"
+title: "A 开发秘籍"
 slug: "k-bvvs89nka9"
 date: "2026-04-30"
 type: "note"
@@ -9,6 +8,7 @@ summary: ""
 ---
 
 ### 20250605 通过设置 ```autoFocusFirstInput``` 属性为 false 来禁用 ProForm 的自动聚焦行为：
+
 ### 20250539 使用脚本配置权限
 ```shell
 #!/bin/bash
@@ -145,7 +145,7 @@ parserOptions: {
 - ```pnpm config set registry https://registry.npmjs.org```
 
 ### 8、安装依赖报错
--  ERR_PNPM_UNEXPECTED_PKG_CONTENT_IN_STORE  Package name mismatch found while reading {"integrity":"sha512-PQO8sDIJ8SIwipTPiR71kJQCKQYB5NGImbOviK8K+kg5xkNSYXLBupuX9QhatFowrsvo9Hj8WgArg3W7ijNAQw==","registry":"https://registry.npmmirror.com/","tarball":"https://registry.npmmirror.com/@babel/traverse/-/traverse-7.17.9.tgz"} from the store. This means that the lockfile is broken. Expected package: @babel/traverse@7.17.10. Actual package in the store by the given integrity: @babel/traverse@7.17.9.
+-  ERR_PNPM_UNEXPECTED_PKG_CONTENT_IN_STORE  Package name mismatch found while reading 
 - 运行```rm -rf $(pnpm store path)```
 
 ### 9、项目打包后，antd组件的定位相关属性会被编译成inset属性，导致低版本浏览器不支持。
