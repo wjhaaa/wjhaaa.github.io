@@ -41,6 +41,11 @@
   --skill-tools: 25 95% 53%;
   --skill-ai: 279 69% 55%;
   --skill-other: 214 88% 56%;
+
+  --portfolio-data-cockpit: 195 100% 45%;
+  --portfolio-management-system: 43 100% 58%;
+  --portfolio-portal-website: 282 85% 56%;
+  --portfolio-mini-program: 161 72% 47%;
 }
 
 .dark {
@@ -83,6 +88,11 @@
   --skill-tools: 25 95% 63%;
   --skill-ai: 279 69% 65%;
   --skill-other: 214 88% 66%;
+
+  --portfolio-data-cockpit: 195 100% 55%;
+  --portfolio-management-system: 43 100% 68%;
+  --portfolio-portal-website: 282 85% 66%;
+  --portfolio-mini-program: 161 72% 57%;
 }
 
 html,
