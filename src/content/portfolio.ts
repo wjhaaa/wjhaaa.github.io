@@ -86,7 +86,10 @@ export const portfolio: PortfolioItem[] = [
       result: "系统查询响应时间从平均 3s 降低到 0.8s，用户满意度显著提升。",
     },
     coverColor: "portfolio-data-cockpit",
-    images: ["/images/portfolio/china.jpg"],
+    images: [
+      "/images/portfolio/china.jpg",
+      "/images/portfolio/china/wechat_2026-05-06_191718_569.png",
+    ],
   },
   {
     slug: "data-cockpit-monitoring",
@@ -149,7 +152,12 @@ export const portfolio: PortfolioItem[] = [
       result: "系统上线后，运维效率提升 25%，新角色配置时间缩短一半。",
     },
     coverColor: "portfolio-management-system",
-    images: ["/images/portfolio/lvmh01.jpg", "/images/portfolio/sinotrans.png"],
+    images: [
+      "/images/portfolio/lvmh01.jpg",
+      "/images/portfolio/lvmh/wechat_2026-05-06_192435_592.jpg",
+      "/images/portfolio/lvmh/wechat_2026-05-06_192608_350.png",
+      "/images/portfolio/lvmh/wechat_2026-05-06_192649_782.png",
+    ],
   },
   {
     slug: "management-system-mind",
@@ -179,7 +187,7 @@ export const portfolio: PortfolioItem[] = [
       result: "系统上线后，运维效率提升 25%，新角色配置时间缩短一半。",
     },
     coverColor: "portfolio-management-system",
-    images: ["/images/portfolio/mind.jpg", "/images/portfolio/sinotrans.png"],
+    images: ["/images/portfolio/mind.jpg"],
   },
   {
     slug: "management-system-5g",
@@ -209,7 +217,12 @@ export const portfolio: PortfolioItem[] = [
       result: "系统上线后，运维效率提升 25%，新角色配置时间缩短一半。",
     },
     coverColor: "portfolio-management-system",
-    images: ["/images/portfolio/unicom.jpg", "/images/portfolio/sinotrans.png"],
+    images: [
+      "/images/portfolio/unicom.jpg",
+      "/images/portfolio/unicom/wechat_2026-05-06_194024_501.jpg",
+      "/images/portfolio/unicom/wechat_2026-05-06_194139_448.png",
+      "/images/portfolio/unicom/wechat_2026-05-06_194353_049.png",
+    ],
   },
   {
     slug: "mini-program-commerce",
@@ -238,7 +251,11 @@ export const portfolio: PortfolioItem[] = [
       result: "页面加载时间控制在 1.2s 内，并获得业务侧好评。",
     },
     coverColor: "portfolio-mini-program",
-    images: ["/images/portfolio/carbonstop/wechat_2026-05-06_202244_301.png"],
+    images: [
+      "/images/portfolio/carbonstop/wechat_2026-05-06_202244_301.png",
+      "/images/portfolio/carbonstop/2026-05-06_202318_505.jpg",
+      "/images/portfolio/carbonstop/2026-05-06_202328_541.jpg",
+    ],
   },
   {
     slug: "mini-program-vip-carbon",
@@ -267,7 +284,12 @@ export const portfolio: PortfolioItem[] = [
       result: "页面加载时间控制在 1.2s 内，并获得业务侧好评。",
     },
     coverColor: "portfolio-mini-program",
-    images: ["/images/portfolio/vip/wechat_2026-05-06_203254_264.png"],
+    images: [
+      "/images/portfolio/vip/wechat_2026-05-06_203254_264.png",
+      "/images/portfolio/vip/wechat_2026-05-06_203353_938.png",
+      "/images/portfolio/vip/wechat_2026-05-06_203434_240.png",
+      "/images/portfolio/vip/wechat_2026-05-06_203531_179.png",
+    ],
   },
   {
     slug: "mini-program-ysf",
