@@ -12,12 +12,6 @@ export function AboutHero() {
         <h1 className="text-4xl font-bold tracking-tight text-[hsl(var(--foreground))] sm:text-5xl">
           {profile.name}
         </h1>
-        <p className="text-lg font-medium bg-gradient-accent">
-          {profile.title}
-        </p>
-        <p className="text-sm text-[hsl(var(--muted-foreground))]">
-          📍 {profile.location}
-        </p>
         <p className="max-w-2xl text-base leading-relaxed text-[hsl(var(--muted-foreground))]">
           A passionate frontend engineer focused on building delightful user
           experiences. I specialize in modern React architecture, TypeScript,

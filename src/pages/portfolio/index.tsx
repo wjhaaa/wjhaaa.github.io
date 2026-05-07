@@ -3,6 +3,7 @@ import { Seo } from "@/components/seo";
 import { portfolio, type PortfolioCategory } from "@/content/portfolio";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
+import { Folder } from "lucide-react";
 
 const categories: PortfolioCategory[] = [
   "Data Cockpit",
@@ -34,19 +35,14 @@ export default function PortfolioPage() {
   return (
     <>
       <Seo title="Portfolio" />
-
       <div className="space-y-10">
         <header className="space-y-2">
           <p className="text-sm uppercase tracking-[0.3em] text-[hsl(var(--accent))]">
-            Portfolio
+            持续更新中...
           </p>
-          <h1 className="text-4xl font-semibold tracking-tight sm:text-5xl">
-            Selected projects by type
-          </h1>
+          <h1 className="text-3xl font-semibold tracking-tight">项目合集</h1>
           <p className="max-w-3xl text-sm leading-7 text-[hsl(var(--muted-foreground))]">
-            Four project categories with distinct visual styles, interactive
-            previews, and detailed case studies for dashboard, management,
-            portal, and mini-program pages.
+            覆盖板块：数据驾驶舱、管理端、门户页、小程序页面等，涉及能源、制造、互联网等多个行业。
           </p>
         </header>
 

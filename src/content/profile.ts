@@ -1,11 +1,9 @@
 export const profile = {
   name: "wjhaaa",
-  title: "Frontend Engineer / Product Engineer",
-  location: "China",
-  email: "you@example.com",
+  email: "17611285079@163.com",
   links: [
     { label: "GitHub", href: "https://github.com/wjhaaa" },
-    { label: "Email", href: "mailto:you@example.com" },
+    { label: "Email", href: "mailto:17611285079@163.com" },
   ],
   skills: [
     "Next.js",
