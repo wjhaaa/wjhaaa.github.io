@@ -13,7 +13,6 @@ import {
   Folder,
   FileText,
   Tag,
-  Calendar,
 } from "lucide-react";
 
 import { getAllKnowledgeMeta, type KnowledgeMeta } from "@/lib/knowledge";
@@ -26,10 +25,7 @@ import {
   type KnowledgeMenuNode,
 } from "@/content/knowledge-menu";
 import { knowledgeSlugMap } from "@/content/knowledge-slug-map";
-import {
-  knowledgeTypes,
-  type KnowledgePostType,
-} from "@/content/knowledge-types";
+import { type KnowledgePostType } from "@/content/knowledge-types";
 import { KnowledgeTypeBadge } from "@/components/knowledge/type-badge";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
@@ -257,7 +253,7 @@ export default function KnowledgeIndexPage({ posts }: Props) {
     if (!router.isReady) return;
 
     const { menu, type, search } = router.query;
-    if (menu) setActiveMenuKey(String(menu));
+    if (menu) setActiveMenuKey(menu as string);
     if (type && type !== "all")
       setActiveType(String(type) as KnowledgePostType);
     if (search) setQ(String(search));
@@ -430,7 +426,6 @@ export default function KnowledgeIndexPage({ posts }: Props) {
                 </div>
                 <Button
                   type="button"
-                  size="icon"
                   variant="outline"
                   className="lg:hidden"
                   onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
