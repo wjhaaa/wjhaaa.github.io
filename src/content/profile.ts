@@ -1,5 +1,5 @@
 export const profile = {
-  name: "wjhaaa",
+  name: "JIAHUI WANG",
   email: "17611285079@163.com",
   links: [
     { label: "GitHub", href: "https://github.com/wjhaaa" },

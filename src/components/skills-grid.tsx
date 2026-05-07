@@ -23,7 +23,7 @@ export function SkillsGrid() {
       <div>
         <h2 className="text-2xl font-semibold tracking-tight">Expertise</h2>
         <p className="text-sm text-[hsl(var(--muted-foreground))]">
-          A comprehensive overview of my technical skills and specializations
+          技术能力与专业领域综合概述
         </p>
       </div>
 
@@ -81,11 +81,6 @@ export function SkillsGrid() {
                       {tag}
                     </span>
                   ))}
-                  {exp.tags.length > 3 && (
-                    <span className="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium text-[hsl(var(--muted-foreground))]">
-                      +{exp.tags.length - 3}
-                    </span>
-                  )}
                 </div>
               </div>
             </div>

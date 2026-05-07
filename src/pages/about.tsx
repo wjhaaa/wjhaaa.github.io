@@ -62,10 +62,10 @@ export default function AboutPage() {
         <SkillsGrid />
 
         {/* Stats & Achievements Section */}
-        <StatsCard />
+        {/* <StatsCard /> */}
 
         {/* Bio Section */}
-        <section className="space-y-4 rounded-lg border border-[hsl(var(--border))] bg-[hsl(var(--card))] p-6 animate-slideUp sm:p-8">
+        {/* <section className="space-y-4 rounded-lg border border-[hsl(var(--border))] bg-[hsl(var(--card))] p-6 animate-slideUp sm:p-8">
           <h2 className="text-xl font-semibold tracking-tight">About Me</h2>
           <div className="space-y-4 text-sm leading-7 text-[hsl(var(--muted-foreground))]">
             <p>
@@ -87,7 +87,7 @@ export default function AboutPage() {
               and push the boundaries of what's possible on the web.
             </p>
           </div>
-        </section>
+        </section> */}
       </div>
     </>
   );
