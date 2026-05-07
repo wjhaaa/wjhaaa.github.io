@@ -13,19 +13,17 @@ const categories: PortfolioCategory[] = [
 
 const categoryLabels: Record<PortfolioCategory, { description: string }> = {
   "Data Cockpit": {
-    description: "Dashboard and analytics experiences for operational insight.",
+    description: "企业碳排放数据监控数据驾驶舱",
   },
   "Management System": {
     description:
-      "Enterprise management interfaces with workflow and permission control.",
+      "企业管理系统管理系统，包括用户管理、角色管理、权限管理等功能。",
   },
   "Portal Website": {
-    description:
-      "Public-facing websites that balance branding, content, and conversion.",
+    description: "企业门户网站，展示企业品牌、产品信息、客户案例等。",
   },
   "Mini Program Page": {
-    description:
-      "Lightweight mini program experiences optimized for mobile scenarios.",
+    description: "小程序/h5",
   },
 };
 
