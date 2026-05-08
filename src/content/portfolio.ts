@@ -28,7 +28,7 @@ export type PortfolioItem = {
 export const portfolio: PortfolioItem[] = [
   {
     slug: "data-cockpit-portal",
-    title: "中国联通5G设备碳足迹评估体系驾驶舱",
+    title: "联通5G设备碳足迹评估体系驾驶舱",
     category: "Data Cockpit",
     summary: "数据驾驶舱监控看板，集成地图下钻、趋势分析、产品对比等多维分析",
     timeframe: "2025",
@@ -129,6 +129,48 @@ export const portfolio: PortfolioItem[] = [
       "/images/portfolio/cecc.jpg",
       "/images/portfolio/cecc/wechat_2026-05-06_223435_479.jpg",
     ],
+  },
+  {
+    slug: "data-cockpit-changan",
+    title: "CMAL数字化驾驶舱",
+    category: "Data Cockpit",
+    timeframe: "2025",
+    role: "前端开发",
+    tags: ["ECharts", "React", "TypeScript"],
+    summary: "实时展示企业碳排放、产品碳足迹、指标执行等多维度碳管理数据。",
+    impact:
+      "支持多维度筛选，帮助决策者快速掌握碳排放趋势、减排项目进展和指标执行情况。",
+    techStack: [
+      "React 18.2.0",
+      "TypeScript 4.9.5",
+      "Ant Design 4.24.8",
+      "ECharts 5.4.2",
+      "Redux Toolkit",
+      "React Router DOM 6.8.2",
+      "Axios",
+      "Less",
+      "Vite 4.1.4",
+    ],
+    highlights: [
+      "采用响应式设计，支持全屏展示，使用 scalePage() 函数实现屏幕自适应缩放",
+      "集成中国地图可视化组件，通过散点图动态展示各城市碳排放分布，支持省份级数据钻取",
+      "模块化组件架构，将排放源排名、产品碳足迹、指标情况等8个核心功能拆分为独立组件，便于维护和扩展",
+      "使用 ECharts 实现多种图表类型（柱状图、折线图、散点地图、进度环图），统一深蓝色科技感视觉风格",
+      "支持多维度数据筛选（年份、月份、组织），实现数据联动更新，提供实时同比分析和趋势预测",
+    ],
+    retrospective: [
+      "建议引入 React Context 或 Redux 管理全局筛选状态，减少 prop drilling",
+      "存在大量硬编码的 rem 单位，建议使用 CSS 变量或主题配置统一管理设计规范",
+      "地图数据文件（allChina.json、省份JSON）体积较大，建议按需加载或采用动态导入优化首屏加载性能",
+    ],
+    details: {
+      challenge: "需要同时展示8个不同维度的碳数据图表",
+      solution:
+        "采用模块化组件架构，主组件 dateView/index.tsx 作为容器，负责数据获取和状态管理，子组件专注于图表渲染",
+      result: "模块化组件架构和清晰的代码组织结构，便于后续功能扩展和维护",
+    },
+    coverColor: "portfolio-data-cockpit",
+    images: ["/images/portfolio/changan/wechat_2026-05-08_170703_055.jpg"],
   },
   {
     slug: "data-cockpit-bjbank",
@@ -286,7 +328,7 @@ export const portfolio: PortfolioItem[] = [
   },
   {
     slug: "management-system-5g",
-    title: "中国联通5G设备碳足迹评估体系",
+    title: "联通5G设备碳足迹评估体系",
     category: "Management System",
     summary:
       "企业级5G设备碳足迹管理平台，提供全生命周期碳足迹评估、数据分析和可视化展示的综合解决方案",
@@ -376,6 +418,109 @@ export const portfolio: PortfolioItem[] = [
       "/images/portfolio/webank/wechat_2026-05-06_190915_149.jpg",
       "/images/portfolio/webank/wechat_2026-05-06_191011_676.png",
       "/images/portfolio/webank/wechat_2026-05-06_191212_407.png",
+    ],
+  },
+  {
+    slug: "portal-website-carbonstop",
+    title: "碳阻迹官网",
+    category: "Portal Website",
+    summary:
+      "基于 Next.js 14 构建的企业级碳中和服务平台官网，涵盖碳计算、碳核算、双碳洞察、ESG服务、碳减排、碳数据库等核心业务模块，支持中英文双语，完美适配移动端和PC端。",
+    timeframe: "2024",
+    role: "前端负责人",
+    impact:
+      "通过设备指纹识别实现个性化服务；SEO优化提升搜索引擎可见度，帮助更多企业了解和使用碳管理服务。",
+    tags: ["门户网站", "低碳动画", "已上线"],
+    techStack: [
+      "Next.js 14.2.3",
+      "React 18",
+      "TypeScript 5",
+      "TailwindCSS 3.4.1",
+      "Ant Design 5.17.4",
+      "next-intl 3.14.1",
+      "Axios 1.7.2",
+      "ahooks 3.8.0",
+      "Swiper 11.1.4",
+      "crypto-js",
+      "@fingerprintjs/fingerprintjs",
+      "@uiw/react-baidu-map",
+      "animate.css",
+    ],
+    highlights: [
+      "移动端/PC端组件分离架构，每个页面独立维护 Mobile.tsx 和 PC.tsx",
+      "基于 next-intl 的完整国际化方案，支持中英文双语动态切换",
+      "智能中间件路由系统，自动识别设备类型并映射菜单ID",
+      "SEO优化：动态生成 sitemap.xml，支持多语言路径",
+    ],
+    retrospective: [
+      "中间件统一处理设备识别和路由映射，避免了每个页面重复判断",
+      "国际化方案需要提前规划，避免后期重构",
+      "CDN图片优化显著提升了页面加载速度，特别是在移动端",
+      "动态生成 sitemap 需要考虑API稳定性，做好错误处理",
+    ],
+    details: {
+      challenge:
+        "项目需要同时支持中英文双语、移动端和PC端双端适配，包含碳计算、碳核算、双碳洞察等多个复杂业务模块，要求高性能、高可用性，同时需要考虑SEO优化和数据安全。",
+
+      solution:
+        "采用 Next.js 14 + TypeScript + TailwindCSS 技术栈，中间件统一处理设备识别和路由映射；配置多个CDN域名优化图片加载；使用 next-sitemap 动态生成站点地图；",
+
+      result:
+        "成功构建了功能完善、性能优异的企业级碳中和综合服务平台，支持中英文双语和多设备适配；为企业用户提供了专业、便捷的碳管理服务体验。",
+    },
+    coverColor: "portfolio-mini-program",
+    images: [
+      "/images/portfolio/carbonstop/website/wechat_2026-05-08_174503_982.jpg",
+      "/images/portfolio/carbonstop/website/wechat_2026-05-08_174630_814.jpg",
+      "/images/portfolio/carbonstop/website/wechat_2026-05-08_174703_569.png",
+    ],
+  },
+  {
+    slug: "portal-website-gver",
+    title: "gver官网",
+    category: "Portal Website",
+    summary:
+      "GVER官网是一个基于React 18和TypeScript的绿色信用项目展示平台，提供项目公开公示、注销查询、审定机构展示等核心功能。",
+    timeframe: "2024",
+    role: "前端负责人",
+    impact: "提升绿色信用透明度",
+    tags: ["门户网站"],
+    techStack: [
+      "React 18",
+      "TypeScript",
+      "Vite",
+      "Ant Design 5",
+      "Pro Components",
+      "Redux Toolkit",
+      "React Router 6",
+      "Formily",
+      "ECharts",
+      "Axios",
+    ],
+    highlights: [
+      "使用Vite构建工具提升开发体验和构建性能",
+      "采用Ant Design Pro Components实现企业级表格和表单",
+      "TypeScript全栈类型安全保证代码质量",
+      "多环境配置管理支持开发、测试、预发布、生产环境",
+      "完善的代码规范体系（ESLint + Prettier + Husky）",
+      "响应式设计适配多端访问",
+    ],
+    retrospective: [
+      "组件化设计提高代码复用性",
+      "API接口自动生成减少手动维护成本",
+      "状态管理集中化便于维护",
+      "路由权限控制确保系统安全性",
+    ],
+    details: {
+      challenge: "多环境配置管理",
+      solution: "Vite环境变量配置",
+      result: "构建效率提升50%",
+    },
+    coverColor: "portfolio-mini-program",
+    images: [
+      "/images/portfolio/gver/website/wechat_2026-05-08_183105_169.jpg",
+      "/images/portfolio/gver/website/wechat_2026-05-08_184052_071.jpg",
+      "/images/portfolio/gver/website/wechat_2026-05-08_184123_051.jpg",
     ],
   },
   {

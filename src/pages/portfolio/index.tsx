@@ -3,7 +3,6 @@ import { Seo } from "@/components/seo";
 import { portfolio, type PortfolioCategory } from "@/content/portfolio";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
-import { Folder } from "lucide-react";
 
 const categories: PortfolioCategory[] = [
   "Data Cockpit",
@@ -27,9 +26,6 @@ const categoryLabels: Record<PortfolioCategory, { description: string }> = {
     description: "小程序/h5",
   },
 };
-
-const categoryColor = (category: PortfolioCategory) =>
-  `--portfolio-${category.toLowerCase().replace(/\s+/g, "-")}`;
 
 export default function PortfolioPage() {
   return (
@@ -70,7 +66,6 @@ export default function PortfolioPage() {
 
                 <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
                   {items.map((item) => {
-                    const colorVar = categoryColor(item.category);
                     return (
                       <Link
                         key={item.slug}
