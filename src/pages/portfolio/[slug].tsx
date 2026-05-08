@@ -4,7 +4,7 @@ import { Seo } from "@/components/seo";
 import { portfolio, type PortfolioItem } from "@/content/portfolio";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
-import Image from "next/image"; // 添加这行导入
+import { PortfolioImage } from "@/components/portfolio-image";
 
 type Props = { item: PortfolioItem };
 
@@ -163,17 +163,17 @@ export default function PortfolioDetailPage({ item }: Props) {
           <h2 className="text-2xl font-semibold tracking-tight">
             Visual preview
           </h2>
-          <div className="py-2">
+          <div className="py-2 space-y-4">
             {galleryItems.map((title, index) => (
-              <Image
-                key={index}
-                src={`${title}`}
-                alt={title}
-                className="w-full rounded-lg py-2"
-                width={300}
-                height={200}
-                loading="lazy"
-              />
+              <div key={index} className="relative w-full aspect-video">
+                <PortfolioImage
+                  src={`${title}`}
+                  alt={title}
+                  fill={true}
+                  priority={index === 0}
+                  className="rounded-lg"
+                />
+              </div>
             ))}
           </div>
         </section>

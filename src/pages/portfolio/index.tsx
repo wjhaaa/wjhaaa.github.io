@@ -3,6 +3,7 @@ import { Seo } from "@/components/seo";
 import { portfolio, type PortfolioCategory } from "@/content/portfolio";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
+import { PortfolioImage } from "@/components/portfolio-image";
 
 const categories: PortfolioCategory[] = [
   "Data Cockpit",
@@ -73,12 +74,12 @@ export default function PortfolioPage() {
                         className="group"
                       >
                         <Card className="overflow-hidden transition-transform duration-300 hover:-translate-y-1 hover:shadow-xl">
-                          <div
-                            className="h-48 bg-[length:220%] bg-center bg-no-repeat bg-cover"
-                            style={{
-                              backgroundImage: `url(${item?.images?.[0] || ""})`,
-                            }}
-                          ></div>
+                          <PortfolioImage
+                            src={item?.images?.[0] || ""}
+                            alt={item.title}
+                            fill={true}
+                            className="h-48 w-full group-hover:scale-105 transition-transform duration-300"
+                          />
                           <div className="space-y-4 p-5">
                             <div className="flex items-center justify-between gap-3 text-xs text-[hsl(var(--muted-foreground))]">
                               <span>{item.timeframe}</span>

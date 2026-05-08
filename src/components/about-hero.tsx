@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 export function AboutHero() {
   const [typedText, setTypedText] = useState("");
   const fullText =
-    "擅长长现代化React架构、TypeScript以及设计系统。坚持持续学习、持续开发、持续产品交付。";
+    "擅长现代化 React 架构、TypeScript 以及设计系统。坚持持续学习、持续开发、持续产品交付。";
 
   useEffect(() => {
     let index = 0;

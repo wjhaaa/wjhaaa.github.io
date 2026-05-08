@@ -428,8 +428,7 @@ export const portfolio: PortfolioItem[] = [
       "基于 Next.js 14 构建的企业级碳中和服务平台官网，涵盖碳计算、碳核算、双碳洞察、ESG服务、碳减排、碳数据库等核心业务模块，支持中英文双语，完美适配移动端和PC端。",
     timeframe: "2024",
     role: "前端负责人",
-    impact:
-      "通过设备指纹识别实现个性化服务；SEO优化提升搜索引擎可见度，帮助更多企业了解和使用碳管理服务。",
+    impact: "SEO优化提升搜索引擎可见度，帮助更多企业了解和使用碳管理服务。",
     tags: ["门户网站", "低碳动画", "已上线"],
     techStack: [
       "Next.js 14.2.3",
@@ -483,7 +482,8 @@ export const portfolio: PortfolioItem[] = [
       "GVER官网是一个基于React 18和TypeScript的绿色信用项目展示平台，提供项目公开公示、注销查询、审定机构展示等核心功能。",
     timeframe: "2024",
     role: "前端负责人",
-    impact: "提升绿色信用透明度",
+    impact:
+      " 为企业提供透明、可追溯的绿色信用信息展示平台 ，提升绿色信用透明度。",
     tags: ["门户网站"],
     techStack: [
       "React 18",
