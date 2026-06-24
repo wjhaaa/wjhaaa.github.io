@@ -5,11 +5,20 @@ type Props = {
   title?: string;
   description?: string;
   canonical?: string;
+  image?: string;
 };
 
-export function Seo({ title, description, canonical }: Props) {
+function resolveOgImage(image?: string) {
+  const path = image ?? siteConfig.ogImage;
+  if (path.startsWith("http")) return path;
+  return `${siteConfig.url}${path.startsWith("/") ? path : `/${path}`}`;
+}
+
+export function Seo({ title, description, canonical, image }: Props) {
   const fullTitle = title ? `${title} | ${siteConfig.name}` : siteConfig.name;
   const desc = description ?? siteConfig.description;
+  const ogImage = resolveOgImage(image);
+  const pageUrl = canonical ?? siteConfig.url;
 
   return (
     <Head>
@@ -20,7 +29,12 @@ export function Seo({ title, description, canonical }: Props) {
       <meta property="og:title" content={fullTitle} />
       <meta property="og:description" content={desc} />
       <meta property="og:type" content="website" />
+      <meta property="og:url" content={pageUrl} />
+      <meta property="og:image" content={ogImage} />
       <meta name="twitter:card" content="summary_large_image" />
+      <meta name="twitter:title" content={fullTitle} />
+      <meta name="twitter:description" content={desc} />
+      <meta name="twitter:image" content={ogImage} />
     </Head>
   );
 }

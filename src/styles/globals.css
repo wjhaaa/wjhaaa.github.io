@@ -128,6 +128,29 @@ body {
     width: auto;
   }
 
+  @keyframes hero-glow-breathe {
+    0%,
+    100% {
+      opacity: 0.55;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 1;
+      transform: scale(1.04);
+    }
+  }
+
+  .hero-glow {
+    animation: hero-glow-breathe 5.5s ease-in-out infinite;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-glow {
+      animation: none;
+      opacity: 0.75;
+    }
+  }
+
   @media (min-width: 1024px) {
     .page-bleed {
       margin-inline: -5.625rem;

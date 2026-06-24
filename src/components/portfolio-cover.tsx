@@ -53,7 +53,7 @@ export function PortfolioCover({
 
   if (variant === "stage") {
     return (
-      <div className={cn("px-2 sm:px-4", className)}>
+      <div className={cn("w-full px-2 sm:px-4", className)}>
         <ScreenMockup
           src={src}
           alt={item.title}

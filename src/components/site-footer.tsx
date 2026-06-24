@@ -8,7 +8,7 @@ export function SiteFooter() {
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
           <div className="space-y-3">
             <p className="text-[12px] font-semibold text-[hsl(var(--foreground))]">
-              {siteConfig.name}
+              {siteConfig.nameZh}
             </p>
             <p className="text-caption text-[hsl(var(--muted-foreground))]">
               {siteConfig.tagline}
@@ -16,50 +16,59 @@ export function SiteFooter() {
           </div>
           <div className="space-y-3">
             <p className="text-[12px] font-semibold text-[hsl(var(--foreground))]">
-              Work
+              作品
             </p>
             <ul className="space-y-2 text-caption text-[hsl(var(--muted-foreground))]">
               <li>
                 <Link href="/portfolio" className="apple-link">
-                  Portfolio
+                  作品集
                 </Link>
               </li>
               <li>
                 <Link href="/about" className="apple-link">
-                  About
+                  关于
+                </Link>
+              </li>
+              <li>
+                <Link href={siteConfig.aiDashboard.href} className="apple-link">
+                  AI 驾驶舱 Demo
                 </Link>
               </li>
             </ul>
           </div>
           <div className="space-y-3">
             <p className="text-[12px] font-semibold text-[hsl(var(--foreground))]">
-              Connect
+              联系
             </p>
             <ul className="space-y-2 text-caption text-[hsl(var(--muted-foreground))]">
               <li>
-                <a href={siteConfig.github} className="apple-link" target="_blank" rel="noreferrer noopener">
+                <a
+                  href={siteConfig.github}
+                  className="apple-link"
+                  target="_blank"
+                  rel="noreferrer noopener"
+                >
                   GitHub
                 </a>
               </li>
               <li>
                 <a href={`mailto:${siteConfig.email}`} className="apple-link">
-                  Email
+                  邮箱
                 </a>
               </li>
             </ul>
           </div>
           <div className="space-y-3">
             <p className="text-[12px] font-semibold text-[hsl(var(--foreground))]">
-              Resume
+              简历
             </p>
             <Link href={siteConfig.resumePath} className="apple-link text-caption">
-              Download PDF ›
+              下载 PDF ›
             </Link>
           </div>
         </div>
         <p className="mt-10 border-t border-[hsl(var(--border))] pt-6 text-caption text-[hsl(var(--muted-foreground))]">
-          Copyright © {new Date().getFullYear()} {siteConfig.name}. All rights
-          reserved.
+          © {new Date().getFullYear()} {siteConfig.nameZh} · {siteConfig.name}
         </p>
       </div>
     </footer>

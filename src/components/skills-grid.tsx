@@ -14,7 +14,7 @@ export function SkillsGrid() {
     <section className="space-y-10 border-t border-[hsl(var(--border))] pt-16">
       <div className="text-center lg:text-left">
         <h2 className="text-3xl font-semibold tracking-tight sm:text-4xl">
-          Expertise
+          技术专长
         </h2>
         <p className="mt-3 text-[17px] text-[hsl(var(--muted-foreground))]">
           技术能力与项目交付方向

@@ -1,43 +1,84 @@
 import Link from "next/link";
 import type { PortfolioItem } from "@/content/portfolio";
+import { categoryLabels } from "@/content/portfolio";
 import { PortfolioCover } from "@/components/portfolio-cover";
 
-type ProjectShowcaseProps = {
+type CaseStudyCardProps = {
   item: PortfolioItem;
   priority?: boolean;
+  metric?: { before: string; after: string; label: string };
 };
 
-export function ProjectShowcase({ item, priority = false }: ProjectShowcaseProps) {
+export function CaseStudyCard({
+  item,
+  priority = false,
+  metric,
+}: CaseStudyCardProps) {
   return (
-    <section className="page-bleed bg-[#000] py-16 text-white sm:py-24">
-      <div className="mx-auto max-w-[1680px] px-6 text-center lg:px-[90px]">
-        <p className="text-[14px] font-medium text-[#2997ff]">Featured Work</p>
-        <h2 className="mx-auto mt-3 max-w-4xl text-balance text-3xl font-semibold tracking-tight sm:text-5xl sm:leading-[1.08]">
-          {item.title}
-        </h2>
-        <p className="mx-auto mt-4 max-w-2xl text-[19px] leading-[1.42] text-[#a1a1a6]">
-          {item.details.result}
-        </p>
-        <div className="mt-6 flex flex-wrap items-center justify-center gap-6">
-          <Link
-            href={`/portfolio/${item.slug}`}
-            className="text-[17px] text-[#2997ff] hover:underline"
-          >
-            Learn more ›
-          </Link>
-          <Link
-            href="/portfolio"
-            className="text-[17px] text-[#2997ff] hover:underline"
-          >
-            View all projects ›
-          </Link>
+    <article className="overflow-hidden rounded-[28px] border border-[hsl(var(--border))] bg-[hsl(var(--card))]">
+      <PortfolioCover item={item} priority={priority} variant="stage" />
+      <div className="space-y-5 p-6 sm:p-8">
+        <div className="flex flex-wrap items-start justify-between gap-4">
+          <div>
+            <p className="text-[12px] uppercase tracking-[0.1em] text-[hsl(var(--muted-foreground))]">
+              {categoryLabels[item.category]} · {item.timeframe}
+            </p>
+            <h3 className="mt-2 text-[24px] font-semibold leading-tight tracking-tight sm:text-[28px]">
+              {item.title}
+            </h3>
+          </div>
+          {metric ? (
+            <div className="rounded-2xl border border-[hsl(var(--border))] bg-[hsl(var(--background))] px-4 py-3 text-right">
+              <p className="text-[11px] uppercase tracking-[0.1em] text-[hsl(var(--muted-foreground))]">
+                {metric.label}
+              </p>
+              <p className="mt-1 flex items-baseline justify-end gap-2">
+                <span className="text-[13px] text-[hsl(var(--muted-foreground))] line-through">
+                  {metric.before}
+                </span>
+                <span className="text-[28px] font-semibold leading-none text-[hsl(var(--link))]">
+                  {metric.after}
+                </span>
+              </p>
+            </div>
+          ) : null}
         </div>
-      </div>
 
-      <div className="mx-auto mt-12 max-w-[1200px] px-6 lg:px-10">
-        <PortfolioCover item={item} priority={priority} variant="stage" />
+        <dl className="grid gap-4 sm:grid-cols-3">
+          <div>
+            <dt className="text-[12px] font-medium uppercase tracking-[0.08em] text-[hsl(var(--muted-foreground))]">
+              挑战
+            </dt>
+            <dd className="mt-2 text-[15px] leading-[1.47] text-[hsl(var(--foreground))]">
+              {item.details.challenge}
+            </dd>
+          </div>
+          <div>
+            <dt className="text-[12px] font-medium uppercase tracking-[0.08em] text-[hsl(var(--muted-foreground))]">
+              方案
+            </dt>
+            <dd className="mt-2 text-[15px] leading-[1.47] text-[hsl(var(--foreground))]">
+              {item.details.solution}
+            </dd>
+          </div>
+          <div>
+            <dt className="text-[12px] font-medium uppercase tracking-[0.08em] text-[hsl(var(--muted-foreground))]">
+              结果
+            </dt>
+            <dd className="mt-2 text-[15px] leading-[1.47] text-[hsl(var(--foreground))]">
+              {item.details.result}
+            </dd>
+          </div>
+        </dl>
+
+        <Link
+          href={`/portfolio/${item.slug}`}
+          className="inline-flex text-[17px] text-[hsl(var(--link))] hover:underline"
+        >
+          查看项目详情 ›
+        </Link>
       </div>
-    </section>
+    </article>
   );
 }
 
@@ -52,7 +93,7 @@ export function ProjectCard({ item, priority = false }: ProjectCardProps) {
       <PortfolioCover item={item} priority={priority} variant="card" />
       <div className="space-y-2 px-1">
         <p className="text-[12px] uppercase tracking-[0.1em] text-[hsl(var(--muted-foreground))]">
-          {item.category}
+          {categoryLabels[item.category]}
         </p>
         <h3 className="text-[21px] font-semibold leading-tight text-[hsl(var(--foreground))] group-hover:text-[hsl(var(--link))]">
           {item.title}

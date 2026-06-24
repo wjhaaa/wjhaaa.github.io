@@ -5,12 +5,16 @@ import { ParticleField } from "@/components/particle-field";
 type PageHeroProps = PropsWithChildren<{
   className?: string;
   align?: "center" | "left";
+  particleSubtle?: boolean;
+  particleEdgeMask?: boolean;
 }>;
 
 export function PageHero({
   children,
   className,
   align = "center",
+  particleSubtle = false,
+  particleEdgeMask = false,
 }: PageHeroProps) {
   return (
     <section
@@ -24,13 +28,15 @@ export function PageHero({
     >
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_50%_0%,rgba(41,151,255,0.14),transparent_58%)]"
+        className="hero-glow pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_50%_0%,rgba(41,151,255,0.28),transparent_62%)]"
       />
-      <ParticleField className="opacity-80" />
+      <ParticleField subtle={particleSubtle} edgeMask={particleEdgeMask} />
       <div
         className={cn(
           "relative z-10",
-          align === "center" && "mx-auto max-w-4xl",
+          align === "center"
+            ? "mx-auto max-w-4xl"
+            : "mx-auto max-w-[1680px] px-6 lg:px-[90px]",
         )}
       >
         {children}

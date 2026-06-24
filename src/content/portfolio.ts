@@ -4,6 +4,20 @@ export type PortfolioCategory =
   | "Portal Website"
   | "Mini Program Page";
 
+export const categoryLabels: Record<PortfolioCategory, string> = {
+  "Data Cockpit": "数据驾驶舱",
+  "Management System": "企业管理系统",
+  "Portal Website": "品牌门户",
+  "Mini Program Page": "小程序",
+};
+
+export const categorySectionDescriptions: Record<PortfolioCategory, string> = {
+  "Data Cockpit": "企业碳排放与业务数据驾驶舱",
+  "Management System": "企业级碳管理与中后台系统",
+  "Portal Website": "品牌门户与产品官网",
+  "Mini Program Page": "小程序与移动端碳账户",
+};
+
 export type PortfolioItem = {
   slug: string;
   title: string;
@@ -54,7 +68,7 @@ export const portfolio: PortfolioItem[] = [
       solution:
         "通过卡片化布局、渐进式加载和数据摘要视图，将关键指标优先展示，并用颜色/图形强化对比。",
       result:
-        "最终产品获得客户认可，用户在关键指标页面的平均停留时间提升了18%。",
+        "地图下钻 + 多维分析驾驶舱交付上线，关键指标页用户停留时长提升 18%。",
     },
     coverColor: "portfolio-data-cockpit",
     coverImage: "/images/portfolio/5g.jpg",
@@ -170,7 +184,8 @@ export const portfolio: PortfolioItem[] = [
       challenge: "需要同时展示8个不同维度的碳数据图表",
       solution:
         "采用模块化组件架构，主组件 dateView/index.tsx 作为容器，负责数据获取和状态管理，子组件专注于图表渲染",
-      result: "模块化组件架构和清晰的代码组织结构，便于后续功能扩展和维护",
+      result:
+        "8 模块同屏大屏交付上线，scalePage 自适应 + 地图省份钻取，支撑 CMAL 碳管理决策看板日常使用。",
     },
     coverColor: "portfolio-data-cockpit",
     coverImage: "/images/portfolio/changan/wechat_2026-05-08_170703_055.jpg",
@@ -217,7 +232,7 @@ export const portfolio: PortfolioItem[] = [
       solution:
         "采用React + ECharts构建可视化系统，使用Vite构建工具提升开发效率，通过ResizeObserver实现响应式适配，配置多环境部署和自动打包压缩",
       result:
-        "成功构建完整的零碳网点大屏系统，实现6大模块数据展示，支持多环境部署，提供流畅的数据可视化体验",
+        "6 模块零碳网点大屏交付北京银行网点，ResizeObserver 自适应多分辨率，多环境一键打包部署。",
     },
     coverColor: "portfolio-data-cockpit",
     images: ["/images/portfolio/bjbank/wechat_2026-05-07_115427_347.jpg"],
@@ -262,7 +277,7 @@ export const portfolio: PortfolioItem[] = [
       solution:
         "采用React 18 + TypeScript构建现代化前端架构，使用ECharts实现数据可视化，通过Formily处理复杂表单，实现AES+RSA混合加密保障安全，集成国际化方案支持多语言",
       result:
-        "成功构建功能完整的企业碳管理平台，实现数据填报、分析、权限管理、国际化等核心功能，为企业碳排放管理提供可靠的技术支撑",
+        "三层权限 + 中英双语交付上线，支撑 LVMH Beauty 碳数据填报、分析与可视化全流程。",
     },
     coverColor: "portfolio-management-system",
     coverImage: "/images/portfolio/lvmh/wechat_2026-05-06_192435_592.jpg",
@@ -320,7 +335,7 @@ export const portfolio: PortfolioItem[] = [
       solution:
         "采用React 17 + TypeScript + Ant Design技术栈，通过Redux进行状态管理，使用i18next实现国际化，集成ECharts进行数据可视化，通过环境变量管理多环境配置，深度集成钉钉SDK实现企业级认证",
       result:
-        "成功构建功能完整的碳管理平台，支持员工碳账户、产品碳足迹、组织碳核算、供应链碳管理等核心业务，实现钉钉免登和中英文双语支持，为企业提供专业的碳排放数据管理解决方案",
+        "四大碳管理模块 + 钉钉免登交付上线，驻场支撑曼德电子日常碳核算与数据填报。",
     },
     coverColor: "portfolio-management-system",
     images: [
@@ -370,7 +385,7 @@ export const portfolio: PortfolioItem[] = [
       solution:
         "采用React + TypeScript构建前端框架，使用Redux Toolkit进行状态管理，通过Formily实现复杂表单配置，ECharts和AntV G6分别处理图表和流程图，设计可配置化图表系统支持JSON配置",
       result:
-        "成功构建完整的5G设备碳足迹管理平台，实现数据采集、分析、可视化的全流程管理，支持灵活的图表配置和权限控制，提升企业碳管理效率",
+        "ECharts + AntV G6 双引擎平台交付中国联通，JSON 配置图表 + 驾驶舱看板支撑 5G 设备全生命周期碳足迹评估。",
     },
     coverColor: "portfolio-management-system",
     images: [
@@ -416,7 +431,8 @@ export const portfolio: PortfolioItem[] = [
       challenge: "排放源清单数据量大，表格和图表渲染性能要求高",
       solution:
         "使用ECharts的按需加载和虚拟滚动技术，表格采用分页加载，图表数据做聚合处理",
-      result: "页面加载时间控制在2秒内，用户体验流畅",
+      result:
+        "GHG/ISO 双标准核算流程交付微众银行，排放源清单首屏加载 < 2s，支撑银行碳数据填报与看板分析。",
     },
     coverColor: "portfolio-management-system",
     images: [
@@ -471,7 +487,7 @@ export const portfolio: PortfolioItem[] = [
         "采用 Next.js 14 + TypeScript + TailwindCSS 技术栈，中间件统一处理设备识别和路由映射；配置多个CDN域名优化图片加载；使用 next-sitemap 动态生成站点地图；",
 
       result:
-        "成功构建了功能完善、性能优异的企业级碳中和综合服务平台，支持中英文双语和多设备适配；为企业用户提供了专业、便捷的碳管理服务体验。",
+        "Next.js 14 中英双语官网上线，中间件自动分流移动/PC，动态 sitemap 覆盖核心业务页 SEO。",
     },
     coverColor: "portfolio-mini-program",
     images: [
@@ -520,7 +536,8 @@ export const portfolio: PortfolioItem[] = [
     details: {
       challenge: "多环境配置管理",
       solution: "Vite环境变量配置",
-      result: "构建效率提升50%",
+      result:
+        "绿色信用公示平台交付上线，项目公示/注销查询/审定机构展示全流程可用，四环境 Vite 构建一键切换。",
     },
     coverColor: "portfolio-mini-program",
     images: [
@@ -553,7 +570,8 @@ export const portfolio: PortfolioItem[] = [
     details: {
       challenge: "这类页面对首屏速度和交互响应要求极高，页面空间有限。",
       solution: "采用轻量组件、复用 UI 规则，并优化资源请求，保证体验顺畅。",
-      result: "页面加载时间控制在 1.2s 内，并获得业务侧好评。",
+      result:
+        "多品牌碳账户小程序批量交付，单客户定制周期缩短至 1–2 周，首屏加载稳定在 1.2s 内。",
     },
     coverColor: "portfolio-mini-program",
     images: [
@@ -595,7 +613,8 @@ export const portfolio: PortfolioItem[] = [
       challenge: "统一架构与多端适配方案",
       solution:
         "采用Taro框架实现跨平台统一开发,使用高德地图JS API实现精确定位和轨迹追踪",
-      result: "用户参与度和活跃度显著提升，为企业ESG目标提供了有力支撑。",
+      result:
+        "Taro 跨端员工碳账户上线，PK 竞技 + 积分商城闭环驱动减排任务完成率提升，覆盖企微与 H5。",
     },
     coverColor: "portfolio-mini-program",
     images: [
@@ -626,7 +645,8 @@ export const portfolio: PortfolioItem[] = [
     details: {
       challenge: "这类页面对首屏速度和交互响应要求极高，页面空间有限。",
       solution: "采用轻量组件、复用 UI 规则，并优化资源请求，保证体验顺畅。",
-      result: "页面加载时间控制在 1.2s 内，并获得业务侧好评。",
+      result:
+        "云闪付碳账户小程序上线，游戏化低碳任务 + SDK 深度集成，首屏加载稳定在 1.2s 内。",
     },
     coverColor: "portfolio-mini-program",
     images: ["/images/portfolio/ysf/wechat_2026-05-06_205100_181.jpg"],
@@ -658,7 +678,7 @@ export const portfolio: PortfolioItem[] = [
       solution:
         "使用dingtalk-jsapi实现免登认证和权限管理，通过.env文件管理多环境配置，支持灵活切换，添加非钉钉环境的兼容处理，确保开发调试便利性",
       result:
-        "成功解决了企业级移动应用开发的复杂挑战，在技术实现、业务功能和用户体验方面都取得了显著成果，为企业环保管理提供了数字化解决方案",
+        "钉钉免登碳账户小程序交付曼德，积分排行 + 团队激励模块上线，四环境配置支撑 UAT 到生产发布。",
     },
     coverColor: "portfolio-mini-program",
     images: [
@@ -679,8 +699,19 @@ export const gridSlugs = [
   "management-system-suite",
 ] as const;
 
+export const homeCaseSlugs = [
+  "data-cockpit-analytics",
+  "management-system-suite",
+] as const;
+
 export function getHeroPortfolio() {
   return portfolio.find((item) => item.slug === heroSlug);
+}
+
+export function getHomeCaseStudies() {
+  return homeCaseSlugs
+    .map((slug) => portfolio.find((item) => item.slug === slug))
+    .filter((item): item is PortfolioItem => Boolean(item));
 }
 
 export function getGridPortfolio() {

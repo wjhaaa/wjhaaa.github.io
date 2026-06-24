@@ -40,7 +40,7 @@ export function SiteHeader() {
             href={siteConfig.resumePath}
             className="hidden rounded-full px-3 py-1.5 text-[12px] text-[hsl(var(--link))] hover:underline sm:inline"
           >
-            Resume
+            简历
           </Link>
         </nav>
       </div>

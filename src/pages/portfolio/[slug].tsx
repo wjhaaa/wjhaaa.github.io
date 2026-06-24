@@ -3,7 +3,7 @@ import type { GetStaticPaths, GetStaticProps } from "next";
 import { Seo } from "@/components/seo";
 import { PageHero } from "@/components/page-hero";
 import { PortfolioCover } from "@/components/portfolio-cover";
-import { portfolio, type PortfolioItem } from "@/content/portfolio";
+import { portfolio, categoryLabels, type PortfolioItem } from "@/content/portfolio";
 
 type Props = { item: PortfolioItem };
 
@@ -26,15 +26,19 @@ export default function PortfolioDetailPage({ item }: Props) {
 
   return (
     <>
-      <Seo title={item.title} description={item.summary} />
+      <Seo
+        title={item.title}
+        description={item.summary}
+        image={item.coverImage ?? item.images?.[0]}
+      />
 
       <div className="space-y-16 pb-16">
-        <PageHero>
+        <PageHero particleSubtle>
           <Link href="/portfolio" className="apple-link text-[14px]">
-            ← Portfolio
+            ← 作品集
           </Link>
           <p className="mt-6 text-caption uppercase tracking-[0.14em] text-[hsl(var(--muted-foreground))]">
-            {item.category} · {item.timeframe}
+            {categoryLabels[item.category]} · {item.timeframe}
           </p>
           <h1 className="text-hero mx-auto mt-3 max-w-4xl text-balance">
             {item.title}
@@ -53,13 +57,13 @@ export default function PortfolioDetailPage({ item }: Props) {
         <section className="grid gap-8 border-t border-[hsl(var(--border))] pt-12 lg:grid-cols-3">
           <div className="space-y-3">
             <p className="text-caption uppercase tracking-[0.14em] text-[hsl(var(--muted-foreground))]">
-              Role
+              角色
             </p>
             <p className="text-[19px] font-semibold">{item.role}</p>
           </div>
           <div className="space-y-3 lg:col-span-2">
             <p className="text-caption uppercase tracking-[0.14em] text-[hsl(var(--muted-foreground))]">
-              Impact
+              成果
             </p>
             <p className="text-[19px] leading-[1.47] text-[hsl(var(--foreground))]">
               {item.details.result}
@@ -69,9 +73,9 @@ export default function PortfolioDetailPage({ item }: Props) {
 
         <section className="grid gap-6 lg:grid-cols-3">
           {[
-            { label: "Challenge", value: item.details.challenge },
-            { label: "Solution", value: item.details.solution },
-            { label: "Result", value: item.details.result },
+            { label: "挑战", value: item.details.challenge },
+            { label: "方案", value: item.details.solution },
+            { label: "结果", value: item.details.result },
           ].map((block) => (
             <div key={block.label} className="rounded-2xl surface-tertiary p-6">
               <p className="text-caption uppercase tracking-[0.14em] text-[hsl(var(--muted-foreground))]">
@@ -87,7 +91,7 @@ export default function PortfolioDetailPage({ item }: Props) {
         <section className="grid gap-10 lg:grid-cols-[2fr_1fr]">
           <div className="space-y-6">
             <h2 className="text-2xl font-semibold tracking-tight">
-              Highlights
+              项目亮点
             </h2>
             <ul className="space-y-4">
               {item.highlights.map((highlight) => (
@@ -103,7 +107,7 @@ export default function PortfolioDetailPage({ item }: Props) {
 
           <div className="space-y-6">
             <h2 className="text-2xl font-semibold tracking-tight">
-              Tech Stack
+              技术栈
             </h2>
             <div className="flex flex-wrap gap-2">
               {item.techStack.map((tech) => (
@@ -121,7 +125,7 @@ export default function PortfolioDetailPage({ item }: Props) {
         {galleryImages.length > 1 ? (
           <section className="space-y-6">
             <h2 className="text-2xl font-semibold tracking-tight">
-              Visual Preview
+              更多截图
             </h2>
             <div className="grid gap-10">
               {galleryImages.slice(1).map((src) => (

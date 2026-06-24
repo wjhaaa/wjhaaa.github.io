@@ -18,14 +18,14 @@ const focusSkills = [
 export default function AboutPage() {
   return (
     <>
-      <Seo title="About" description={siteConfig.description} />
+      <Seo title="关于" description={siteConfig.description} />
 
       <div className="space-y-20 pb-16">
         <AboutHero />
 
         <section className="grid gap-8 border-t border-[hsl(var(--border))] pt-16 lg:grid-cols-2">
           <div className="space-y-4">
-            <h2 className="text-2xl font-semibold tracking-tight">Contact</h2>
+            <h2 className="text-2xl font-semibold tracking-tight">联系</h2>
             <p className="text-[17px] text-[hsl(var(--muted-foreground))]">
               {profile.email}
             </p>
@@ -49,7 +49,7 @@ export default function AboutPage() {
           </div>
 
           <div className="space-y-4">
-            <h2 className="text-2xl font-semibold tracking-tight">Focus</h2>
+            <h2 className="text-2xl font-semibold tracking-tight">专注方向</h2>
             <p className="text-[17px] leading-[1.47] text-[hsl(var(--muted-foreground))]">
               数据可视化 · 企业级 React 中后台 · 大屏响应式适配
             </p>
