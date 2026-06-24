@@ -10,13 +10,7 @@ export function SiteLayout({ children }: PropsWithChildren) {
   return (
     <div className="min-h-dvh overflow-x-clip">
       <SiteHeader />
-      <main
-        className={
-          isHome
-            ? "mx-auto max-w-[1680px]"
-            : "mx-auto max-w-[1680px] px-6 lg:px-[90px]"
-        }
-      >
+      <main className="mx-auto max-w-[1680px] px-6 lg:px-16">
         {children}
       </main>
       {!isHome ? <SiteFooter /> : null}

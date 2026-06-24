@@ -8,7 +8,7 @@ export function SiteHeader() {
 
   return (
     <header className="sticky top-0 z-40 border-b border-transparent bg-[hsl(var(--nav-background))] backdrop-blur-xl supports-[backdrop-filter]:bg-[hsl(var(--nav-background))]">
-      <div className="mx-auto flex h-11 max-w-[1680px] items-center justify-between px-6 lg:px-[90px]">
+      <div className="mx-auto flex h-11 max-w-[1680px] items-center justify-between px-6 lg:px-16">
         <Link
           href="/"
           className="text-[14px] font-semibold tracking-tight text-[hsl(var(--foreground))]"

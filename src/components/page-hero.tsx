@@ -36,7 +36,7 @@ export function PageHero({
           "relative z-10",
           align === "center"
             ? "mx-auto max-w-4xl"
-            : "mx-auto max-w-[1680px] px-6 lg:px-[90px]",
+            : "mx-auto max-w-[1680px] px-6 lg:px-16",
         )}
       >
         {children}

@@ -7,7 +7,7 @@ export function AiDashboardPromo() {
 
   return (
     <section className="page-bleed border-y border-[hsl(var(--border))] bg-[hsl(var(--secondary))] py-14 lg:py-16">
-      <div className="mx-auto flex max-w-[1680px] flex-col gap-8 px-6 lg:flex-row lg:items-center lg:justify-between lg:gap-12 lg:px-[90px]">
+      <div className="mx-auto flex max-w-[1680px] flex-col gap-8 px-6 lg:flex-row lg:items-center lg:justify-between lg:gap-12 lg:px-16">
         <div className="max-w-2xl">
           <p className="flex items-center gap-2 text-[12px] uppercase tracking-[0.12em] text-[hsl(var(--link))]">
             <Sparkles className="size-3.5" aria-hidden />

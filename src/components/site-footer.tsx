@@ -4,7 +4,7 @@ import { siteConfig } from "@/lib/site-config";
 export function SiteFooter() {
   return (
     <footer className="border-t border-[hsl(var(--border))] surface-secondary">
-      <div className="mx-auto max-w-[1680px] px-6 py-12 lg:px-[90px]">
+      <div className="mx-auto max-w-[1680px] px-6 py-12 lg:px-16">
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
           <div className="space-y-3">
             <p className="text-[12px] font-semibold text-[hsl(var(--foreground))]">

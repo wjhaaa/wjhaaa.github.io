@@ -9,7 +9,7 @@ export const siteConfig = {
   titleZh: "前端工程师",
   tagline: "企业级 React · 数据可视化 · 大屏驾驶舱",
   description:
-    "5 年+前端经验，专注数据驾驶舱与企业级中后台交付。曾服务 LVMH Beauty、微众银行、中国联通、中煤集团、北京银行等客户。",
+    "5 年+前端经验，专注数据驾驶舱与企业级中后台交付。服务金融、能源、零售等行业头部客户。",
   resumePath: "/resume.pdf",
   email: "17611285079@163.com",
   github: "https://github.com/wjhaaa",

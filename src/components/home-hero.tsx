@@ -1,10 +1,14 @@
 import Link from "next/link";
+import { useCallback, useState } from "react";
 import type { PortfolioItem } from "@/content/portfolio";
-import { portfolio } from "@/content/portfolio";
+import { heroClients } from "@/content/portfolio";
 import { HeroCarousel } from "@/components/hero-carousel";
+import { HeroClientStrip } from "@/components/hero-client-strip";
 import { PageHero } from "@/components/page-hero";
 import { Button } from "@/components/ui/button";
 import { siteConfig } from "@/lib/site-config";
+
+const PAUSE_AFTER_SELECT_MS = 8000;
 
 type HomeScreenProps = {
   featured: PortfolioItem;
@@ -13,83 +17,84 @@ type HomeScreenProps = {
 
 export function HomeScreen({ featured, carouselItems }: HomeScreenProps) {
   const { heroMetric, aiDashboard } = siteConfig;
+  const [carouselIndex, setCarouselIndex] = useState(0);
+  const [carouselPaused, setCarouselPaused] = useState(false);
+
+  const handleClientSelect = useCallback((index: number) => {
+    setCarouselIndex(index);
+    setCarouselPaused(true);
+    window.setTimeout(() => setCarouselPaused(false), PAUSE_AFTER_SELECT_MS);
+  }, []);
 
   return (
     <PageHero
       align="left"
       particleSubtle
       particleEdgeMask
-      className="flex min-h-[calc(100dvh-2.75rem)] flex-col pb-5 pt-6 lg:pb-6 lg:pt-8"
+      className="!pb-0 !pt-0"
     >
-      <div className="flex flex-1 flex-col justify-center">
-        <div className="grid items-center gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)] lg:gap-12">
-          <div className="min-w-0 max-w-xl">
-            <p className="text-[13px] font-medium text-[hsl(var(--link))] sm:text-[14px]">
+      <div className="py-12 lg:py-16">
+        <div className="grid gap-10 lg:grid-cols-[minmax(0,0.44fr)_minmax(0,0.56fr)] lg:gap-x-14">
+          <div className="min-w-0 max-w-md lg:col-start-1 lg:self-center">
+            <p className="text-[14px] font-medium text-[hsl(var(--link))]">
               {siteConfig.titleZh} · {siteConfig.tagline}
             </p>
-            <h1 className="text-hero mt-3 text-balance text-[hsl(var(--foreground))] sm:mt-4">
+            <h1 className="text-hero mt-4 text-balance text-[hsl(var(--foreground))]">
               {siteConfig.nameZh}
             </h1>
-            <p className="mt-4 line-clamp-3 text-balance text-[15px] leading-[1.42] text-[hsl(var(--muted-foreground))] sm:mt-5 sm:line-clamp-none sm:text-[17px] lg:text-[18px]">
+            <p className="mt-5 text-[17px] leading-[1.47] text-[hsl(var(--muted-foreground))]">
               {siteConfig.description}
             </p>
 
-            <div className="mt-6 sm:mt-8">
-              <p className="text-[11px] uppercase tracking-[0.12em] text-[hsl(var(--muted-foreground))] sm:text-[12px]">
+            <div className="mt-8">
+              <p className="text-[12px] uppercase tracking-[0.12em] text-[hsl(var(--muted-foreground))]">
                 {heroMetric.label}
               </p>
               <p className="mt-1 flex items-baseline gap-3">
-                <span className="text-[14px] text-[hsl(var(--muted-foreground))] line-through decoration-[hsl(var(--muted-foreground))]/50 sm:text-[15px]">
+                <span className="text-[15px] text-[hsl(var(--muted-foreground))] line-through decoration-[hsl(var(--muted-foreground))]/50">
                   {heroMetric.before}
                 </span>
-                <span className="text-[36px] font-semibold leading-none tracking-tight text-[hsl(var(--foreground))] sm:text-[44px] lg:text-[48px]">
+                <span className="text-[40px] font-semibold leading-none tracking-tight text-[hsl(var(--foreground))] sm:text-[48px]">
                   {heroMetric.after}
                 </span>
               </p>
-              <p className="mt-1 text-[12px] text-[hsl(var(--muted-foreground))] sm:text-[13px]">
+              <p className="mt-1 text-[13px] text-[hsl(var(--muted-foreground))]">
                 {featured.title}
               </p>
             </div>
 
-            <div className="mt-6 flex flex-wrap items-center gap-3 sm:mt-8 sm:gap-4">
+            <div className="mt-8 flex flex-wrap items-center gap-5">
               <Button asChild size="lg">
                 <Link href="/portfolio">查看作品集</Link>
               </Button>
-              <Button asChild variant="secondary" size="lg">
-                <Link href={siteConfig.resumePath}>下载简历</Link>
-              </Button>
+              <Link
+                href={siteConfig.resumePath}
+                className="apple-link text-[15px]"
+              >
+                下载简历 ›
+              </Link>
+              <Link href={aiDashboard.href} className="apple-link text-[15px]">
+                AI 驾驶舱 Demo ›
+              </Link>
             </div>
           </div>
 
-          <div className="min-w-0 w-full">
-            <HeroCarousel items={carouselItems} />
-          </div>
+          <HeroCarousel
+            items={carouselItems}
+            variant="hero"
+            index={carouselIndex}
+            onIndexChange={setCarouselIndex}
+            paused={carouselPaused}
+            onPauseChange={setCarouselPaused}
+          />
         </div>
-      </div>
 
-      <div className="mt-6 border-t border-[hsl(var(--border))]/80 pt-5 lg:mt-8">
-        <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
-          <ul className="flex flex-wrap items-center gap-1.5 sm:gap-2">
-            {siteConfig.clients.map((client) => (
-              <li
-                key={client}
-                className="rounded-full border border-[hsl(var(--border))] bg-[hsl(var(--secondary))]/80 px-2.5 py-1 text-[11px] font-medium text-[hsl(var(--foreground))] sm:px-3 sm:text-[12px]"
-              >
-                {client}
-              </li>
-            ))}
-          </ul>
-          <p className="shrink-0 text-[13px] text-[hsl(var(--muted-foreground))] sm:text-[14px]">
-            <Link href={aiDashboard.href} className="apple-link text-[13px] sm:text-[14px]">
-              AI 驾驶舱 Demo ›
-            </Link>
-            <span className="mx-2 text-[hsl(var(--border))]">·</span>
-            共 {portfolio.length} 个项目 ·{" "}
-            <Link href="/portfolio" className="apple-link text-[13px] sm:text-[14px]">
-              查看全部 ›
-            </Link>
-          </p>
-        </div>
+        <HeroClientStrip
+          clients={heroClients}
+          items={carouselItems}
+          activeIndex={carouselIndex}
+          onSelect={handleClientSelect}
+        />
       </div>
     </PageHero>
   );

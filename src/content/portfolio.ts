@@ -700,9 +700,19 @@ export const gridSlugs = [
 ] as const;
 
 export const heroCarouselSlugs = [
+  "data-cockpit-portal",
   "data-cockpit-analytics",
   "management-system-suite",
-  "data-cockpit-portal",
+  "management-system-webank",
+  "data-cockpit-bjbank",
+] as const;
+
+export const heroClients = [
+  { name: "中国联通", slug: "data-cockpit-portal" },
+  { name: "中煤集团", slug: "data-cockpit-analytics" },
+  { name: "LVMH Beauty", slug: "management-system-suite" },
+  { name: "微众银行", slug: "management-system-webank" },
+  { name: "北京银行", slug: "data-cockpit-bjbank" },
 ] as const;
 
 export const homeCaseSlugs = [
@@ -715,8 +725,8 @@ export function getHeroPortfolio() {
 }
 
 export function getHeroCarouselItems() {
-  return heroCarouselSlugs
-    .map((slug) => portfolio.find((item) => item.slug === slug))
+  return heroClients
+    .map(({ slug }) => portfolio.find((item) => item.slug === slug))
     .filter((item): item is PortfolioItem => Boolean(item));
 }
 
