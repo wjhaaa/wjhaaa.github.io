@@ -2,7 +2,7 @@ import * as React from "react";
 import { Slot } from "@radix-ui/react-slot";
 import { cn } from "@/lib/utils";
 
-type ButtonVariant = "default" | "secondary" | "outline" | "ghost";
+type ButtonVariant = "default" | "secondary" | "outline" | "ghost" | "link";
 type ButtonSize = "default" | "sm" | "lg";
 
 export type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
@@ -12,23 +12,24 @@ export type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
 };
 
 const base =
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 ring-offset-[hsl(var(--background))]";
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap text-[17px] font-normal transition-opacity duration-160 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[hsl(var(--ring))] focus-visible:ring-offset-2 focus-visible:ring-offset-[hsl(var(--background))] disabled:pointer-events-none disabled:opacity-50";
 
 const variants: Record<ButtonVariant, string> = {
   default:
-    "bg-[hsl(var(--primary))] text-[hsl(var(--primary-foreground))] hover:opacity-90 focus-visible:ring-[hsl(var(--ring))]",
+    "rounded-full bg-[hsl(var(--primary))] text-[hsl(var(--primary-foreground))] hover:opacity-88",
   secondary:
-    "bg-[hsl(var(--secondary))] text-[hsl(var(--secondary-foreground))] hover:opacity-90 focus-visible:ring-[hsl(var(--ring))]",
+    "rounded-full bg-[hsl(var(--muted))] text-[hsl(var(--foreground))] hover:opacity-80",
   outline:
-    "border border-[hsl(var(--border))] bg-transparent hover:bg-[hsl(var(--muted))] focus-visible:ring-[hsl(var(--ring))]",
+    "rounded-full border border-[hsl(var(--border))] bg-transparent text-[hsl(var(--foreground))] hover:bg-[hsl(var(--secondary))]",
   ghost:
-    "bg-transparent hover:bg-[hsl(var(--muted))] focus-visible:ring-[hsl(var(--ring))]",
+    "rounded-full bg-transparent text-[hsl(var(--foreground))] hover:bg-[hsl(var(--secondary))]",
+  link: "rounded-none bg-transparent p-0 text-[hsl(var(--link))] hover:underline hover:underline-offset-4",
 };
 
 const sizes: Record<ButtonSize, string> = {
-  default: "h-9 px-4 py-2",
-  sm: "h-8 px-3",
-  lg: "h-10 px-6",
+  default: "h-10 px-5",
+  sm: "h-9 px-4 text-[14px]",
+  lg: "h-11 px-6 text-[17px]",
 };
 
 export function Button({
@@ -41,9 +42,13 @@ export function Button({
   const Comp = asChild ? Slot : "button";
   return (
     <Comp
-      className={cn(base, variants[variant], sizes[size], className)}
+      className={cn(
+        base,
+        variants[variant],
+        variant !== "link" && sizes[size],
+        className,
+      )}
       {...props}
     />
   );
 }
-

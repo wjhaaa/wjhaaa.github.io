@@ -1,87 +1,50 @@
 import { profile } from "@/content/profile";
-import {
-  Zap,
-  Package,
-  BarChart3,
-  Palette,
-  Wrench,
-  Lightbulb,
-} from "lucide-react";
 
 const iconMap = {
-  Zap,
-  Package,
-  BarChart3,
-  Palette,
-  Wrench,
-  Lightbulb,
+  Zap: null,
+  Package: null,
+  BarChart3: null,
+  Palette: null,
+  Wrench: null,
+  Lightbulb: null,
 };
 
 export function SkillsGrid() {
   return (
-    <section className="space-y-6">
-      <div>
-        <h2 className="text-2xl font-semibold tracking-tight">Expertise</h2>
-        <p className="text-sm text-[hsl(var(--muted-foreground))]">
-          技术能力与专业领域综合概述
+    <section className="space-y-10 border-t border-[hsl(var(--border))] pt-16">
+      <div className="text-center lg:text-left">
+        <h2 className="text-3xl font-semibold tracking-tight sm:text-4xl">
+          Expertise
+        </h2>
+        <p className="mt-3 text-[17px] text-[hsl(var(--muted-foreground))]">
+          技术能力与项目交付方向
         </p>
       </div>
 
-      <div className="grid gap-6 animate-stagger md:grid-cols-2 lg:grid-cols-3">
+      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {profile.expertise.map((exp) => {
-          const Icon = iconMap[exp.icon as keyof typeof iconMap];
-          const colorVar = `--${exp.color}`;
+          void iconMap[exp.icon as keyof typeof iconMap];
 
           return (
             <div
               key={exp.category}
-              className="group relative overflow-hidden rounded-lg border border-[hsl(var(--border))] bg-[hsl(var(--card))] p-6 transition-all duration-300 hover:border-[hsl(var(--accent))] hover:shadow-lg"
+              className="rounded-2xl surface-tertiary p-6"
             >
-              {/* Gradient background on hover */}
-              <div
-                className="absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-5"
-                style={{
-                  background: `linear-gradient(135deg, hsl(var(${colorVar})) 0%, transparent 100%)`,
-                }}
-              />
-
-              {/* Content */}
-              <div className="relative z-10 space-y-4">
-                <div className="flex items-start justify-between">
-                  <h3 className="font-semibold text-[hsl(var(--foreground))]">
-                    {exp.category}
-                  </h3>
-                  {Icon && (
-                    <div
-                      className="rounded-lg p-2 transition-transform duration-300 group-hover:scale-110"
-                      style={{
-                        backgroundColor: `hsl(var(${colorVar}) / 0.1)`,
-                        color: `hsl(var(${colorVar}))`,
-                      }}
-                    >
-                      <Icon className="h-5 w-5" />
-                    </div>
-                  )}
-                </div>
-
-                <p className="text-sm leading-relaxed text-[hsl(var(--muted-foreground))]">
-                  {exp.description}
-                </p>
-
-                <div className="flex flex-wrap gap-2 pt-2">
-                  {exp.tags.slice(0, 3).map((tag) => (
-                    <span
-                      key={tag}
-                      className="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium transition-colors duration-200"
-                      style={{
-                        backgroundColor: `hsl(var(${colorVar}) / 0.1)`,
-                        color: `hsl(var(${colorVar}))`,
-                      }}
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
+              <h3 className="text-[19px] font-semibold text-[hsl(var(--foreground))]">
+                {exp.category}
+              </h3>
+              <p className="mt-3 text-[17px] leading-[1.47] text-[hsl(var(--muted-foreground))]">
+                {exp.description}
+              </p>
+              <div className="mt-4 flex flex-wrap gap-2">
+                {exp.tags.slice(0, 3).map((tag) => (
+                  <span
+                    key={tag}
+                    className="text-caption text-[hsl(var(--muted-foreground))]"
+                  >
+                    {tag}
+                  </span>
+                ))}
               </div>
             </div>
           );

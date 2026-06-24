@@ -1,15 +1,11 @@
 import Link from "next/link";
 import type { GetStaticPaths, GetStaticProps } from "next";
 import { Seo } from "@/components/seo";
+import { PageHero } from "@/components/page-hero";
+import { PortfolioCover } from "@/components/portfolio-cover";
 import { portfolio, type PortfolioItem } from "@/content/portfolio";
-import { Badge } from "@/components/ui/badge";
-import { Card } from "@/components/ui/card";
-import { PortfolioImage } from "@/components/portfolio-image";
 
 type Props = { item: PortfolioItem };
-
-const categoryColor = (category: string) =>
-  `--portfolio-${category.toLowerCase().replace(/\s+/g, "-")}`;
 
 export const getStaticPaths: GetStaticPaths = async () => {
   return {
@@ -26,157 +22,121 @@ export const getStaticProps: GetStaticProps<Props> = async (ctx) => {
 };
 
 export default function PortfolioDetailPage({ item }: Props) {
-  const galleryItems = item.images ?? [item.title, item.title, item.title];
+  const galleryImages = item.images ?? [];
+
   return (
     <>
       <Seo title={item.title} description={item.summary} />
 
-      <div className="space-y-8">
-        <div className="space-y-3">
-          <Link
-            href="/portfolio"
-            className="text-sm text-[hsl(var(--muted-foreground))] hover:underline hover:underline-offset-4"
-          >
-            ← Back to portfolio
+      <div className="space-y-16 pb-16">
+        <PageHero>
+          <Link href="/portfolio" className="apple-link text-[14px]">
+            ← Portfolio
           </Link>
-          <div className="space-y-2 bg-[hsl(var(--card))]">
-            <h1 className="text-4xl mt-5 font-semibold tracking-tight sm:text-5xl">
-              {item.title}
-            </h1>
-            <p className="max-w-3xl text-sm leading-7 text-[hsl(var(--muted-foreground))]">
-              {item.summary}
+          <p className="mt-6 text-caption uppercase tracking-[0.14em] text-[hsl(var(--muted-foreground))]">
+            {item.category} · {item.timeframe}
+          </p>
+          <h1 className="text-hero mx-auto mt-3 max-w-4xl text-balance">
+            {item.title}
+          </h1>
+          <p className="mx-auto mt-6 max-w-3xl text-[21px] leading-[1.381] text-[hsl(var(--muted-foreground))]">
+            {item.summary}
+          </p>
+        </PageHero>
+
+        <section className="page-bleed bg-[#000] py-12 sm:py-16">
+          <div className="mx-auto max-w-[1200px] px-6 lg:px-10">
+            <PortfolioCover item={item} priority variant="stage" />
+          </div>
+        </section>
+
+        <section className="grid gap-8 border-t border-[hsl(var(--border))] pt-12 lg:grid-cols-3">
+          <div className="space-y-3">
+            <p className="text-caption uppercase tracking-[0.14em] text-[hsl(var(--muted-foreground))]">
+              Role
             </p>
-            <div className="grid gap-4 sm:grid-cols-2">
-              <div className="rounded-3xl border border-[hsl(var(--border))] bg-[hsl(var(--card))] p-5">
-                <p className="text-xs uppercase tracking-[0.18em] text-[hsl(var(--muted-foreground))]">
-                  Role
-                </p>
-                <p className="mt-2 text-sm font-medium text-[hsl(var(--foreground))]">
-                  {item.role}
-                </p>
-              </div>
-              <div className="rounded-3xl border border-[hsl(var(--border))] bg-[hsl(var(--card))] p-5">
-                <p className="text-xs uppercase tracking-[0.18em] text-[hsl(var(--muted-foreground))]">
-                  Impact
-                </p>
-                <p className="mt-2 text-sm font-medium text-[hsl(var(--foreground))]">
-                  {item.impact}
-                </p>
-              </div>
-            </div>
+            <p className="text-[19px] font-semibold">{item.role}</p>
           </div>
-        </div>
+          <div className="space-y-3 lg:col-span-2">
+            <p className="text-caption uppercase tracking-[0.14em] text-[hsl(var(--muted-foreground))]">
+              Impact
+            </p>
+            <p className="text-[19px] leading-[1.47] text-[hsl(var(--foreground))]">
+              {item.details.result}
+            </p>
+          </div>
+        </section>
 
-        <section className="space-y-4">
-          <div className="grid gap-4 xl:grid-cols-[2fr_1fr]">
-            <div className="space-y-6">
-              <Card>
-                <div className="space-y-5 p-6">
-                  <div>
-                    <p className="text-sm font-semibold uppercase tracking-[0.18em] text-[hsl(var(--muted-foreground))]">
-                      Overview
-                    </p>
-                  </div>
-                  <div className="grid gap-4 sm:grid-cols-3">
-                    <div className="rounded-3xl bg-[hsl(var(--muted))] p-4 text-sm text-[hsl(var(--foreground))]">
-                      <p className="font-semibold">Challenge</p>
-                      <p className="mt-2 text-[hsl(var(--muted-foreground))]">
-                        {item.details.challenge}
-                      </p>
-                    </div>
-                    <div className="rounded-3xl bg-[hsl(var(--muted))] p-4 text-sm text-[hsl(var(--foreground))]">
-                      <p className="font-semibold">Solution</p>
-                      <p className="mt-2 text-[hsl(var(--muted-foreground))]">
-                        {item.details.solution}
-                      </p>
-                    </div>
-                    <div className="rounded-3xl bg-[hsl(var(--muted))] p-4 text-sm text-[hsl(var(--foreground))]">
-                      <p className="font-semibold">Result</p>
-                      <p className="mt-2 text-[hsl(var(--muted-foreground))]">
-                        {item.details.result}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </Card>
-
-              <Card>
-                <div className="space-y-5 p-6">
-                  <div>
-                    <p className="text-sm font-semibold uppercase tracking-[0.18em] text-[hsl(var(--muted-foreground))]">
-                      Retrospective
-                    </p>
-                  </div>
-                  <div className="grid gap-4 sm:grid-cols-3">
-                    {item.retrospective.map((note) => (
-                      <div
-                        key={note}
-                        className="rounded-3xl bg-[hsl(var(--muted))] p-4 text-sm text-[hsl(var(--foreground))]"
-                      >
-                        <div className="text-sm leading-6 text-[hsl(var(--muted-foreground))]">
-                          {note}
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </Card>
+        <section className="grid gap-6 lg:grid-cols-3">
+          {[
+            { label: "Challenge", value: item.details.challenge },
+            { label: "Solution", value: item.details.solution },
+            { label: "Result", value: item.details.result },
+          ].map((block) => (
+            <div key={block.label} className="rounded-2xl surface-tertiary p-6">
+              <p className="text-caption uppercase tracking-[0.14em] text-[hsl(var(--muted-foreground))]">
+                {block.label}
+              </p>
+              <p className="mt-4 text-[17px] leading-[1.47] text-[hsl(var(--foreground))]">
+                {block.value}
+              </p>
             </div>
+          ))}
+        </section>
 
-            <div className="space-y-4">
-              <Card>
-                <div className="p-6">
-                  <p className="text-sm font-semibold uppercase tracking-[0.18em] text-[hsl(var(--muted-foreground))]">
-                    Tech stack
-                  </p>
-                  <div className="mt-4 flex flex-wrap gap-2">
-                    {item.techStack.map((tech) => (
-                      <Badge key={tech} variant="outline">
-                        {tech}
-                      </Badge>
-                    ))}
-                  </div>
-                </div>
-              </Card>
-              <Card>
-                <div className="p-6">
-                  <p className="text-sm font-semibold uppercase tracking-[0.18em] text-[hsl(var(--muted-foreground))]">
-                    Highlights
-                  </p>
-                  <ul className="mt-4 space-y-3 text-sm leading-6 text-[hsl(var(--muted-foreground))]">
-                    {item.highlights.map((highlight) => (
-                      <li key={highlight} className="flex gap-3">
-                        <span className="mt-1 h-2 w-2 rounded-full bg-[hsl(var(--accent))]" />
-                        <span>{highlight}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </Card>
+        <section className="grid gap-10 lg:grid-cols-[2fr_1fr]">
+          <div className="space-y-6">
+            <h2 className="text-2xl font-semibold tracking-tight">
+              Highlights
+            </h2>
+            <ul className="space-y-4">
+              {item.highlights.map((highlight) => (
+                <li
+                  key={highlight}
+                  className="border-b border-[hsl(var(--border))] pb-4 text-[17px] leading-[1.47] text-[hsl(var(--muted-foreground))]"
+                >
+                  {highlight}
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="space-y-6">
+            <h2 className="text-2xl font-semibold tracking-tight">
+              Tech Stack
+            </h2>
+            <div className="flex flex-wrap gap-2">
+              {item.techStack.map((tech) => (
+                <span
+                  key={tech}
+                  className="rounded-full bg-[hsl(var(--muted))] px-3 py-1 text-[12px] text-[hsl(var(--foreground))]"
+                >
+                  {tech}
+                </span>
+              ))}
             </div>
           </div>
         </section>
 
-        <section className="space-y-4"></section>
-
-        <section className="space-y-4">
-          <h2 className="text-2xl font-semibold tracking-tight">
-            Visual preview
-          </h2>
-          <div className="py-2 space-y-4">
-            {galleryItems.map((title, index) => (
-              <div key={index} className="relative w-full aspect-video">
-                <PortfolioImage
-                  src={`${title}`}
-                  alt={title}
-                  fill={true}
-                  priority={index === 0}
-                  className="rounded-lg"
-                />
-              </div>
-            ))}
-          </div>
-        </section>
+        {galleryImages.length > 1 ? (
+          <section className="space-y-6">
+            <h2 className="text-2xl font-semibold tracking-tight">
+              Visual Preview
+            </h2>
+            <div className="grid gap-10">
+              {galleryImages.slice(1).map((src) => (
+                <div key={src} className="page-bleed bg-[#000] py-8">
+                  <div className="mx-auto max-w-[1000px] px-6">
+                    <PortfolioCover
+                      item={{ ...item, images: [src], coverImage: src }}
+                      variant="stage"
+                    />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
+        ) : null}
       </div>
     </>
   );

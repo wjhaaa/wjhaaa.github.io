@@ -1,269 +1,285 @@
 @import "tailwindcss";
 
-/* shadcn-ui inspired design tokens */
+/* Apple-inspired design tokens */
 :root {
   --background: 0 0% 100%;
-  --foreground: 222.2 84% 4.9%;
+  --foreground: 240 6% 11%;
 
-  --muted: 210 40% 96.1%;
-  --muted-foreground: 215.4 16.3% 46.9%;
+  --secondary: 240 20% 98%;
+  --secondary-foreground: 240 6% 11%;
 
-  --border: 214.3 31.8% 91.4%;
-  --input: 214.3 31.8% 91.4%;
-  --ring: 222.2 84% 4.9%;
+  --muted: 240 6% 96%;
+  --muted-foreground: 240 2% 43%;
 
-  --primary: 222.2 47.4% 11.2%;
-  --primary-foreground: 210 40% 98%;
+  --border: 240 6% 92%;
+  --input: 240 6% 92%;
+  --ring: 211 100% 45%;
 
-  --secondary: 210 40% 96.1%;
-  --secondary-foreground: 222.2 47.4% 11.2%;
+  --primary: 211 100% 45%;
+  --primary-foreground: 0 0% 100%;
 
-  --card: 0 0% 100%;
-  --card-foreground: 222.2 84% 4.9%;
+  --link: 211 100% 40%;
 
-  /* Accent & Semantic Colors */
-  --accent: 262 80% 50%;
-  --accent-foreground: 210 40% 98%;
+  --card: 240 6% 96%;
+  --card-foreground: 240 6% 11%;
 
-  --success: 142 71% 45%;
-  --success-foreground: 210 40% 98%;
+  --nav-background: 250 20% 98% / 0.72;
 
-  --warning: 38 92% 50%;
-  --warning-foreground: 222.2 84% 4.9%;
+  --skill-react: 211 100% 45%;
+  --skill-vue: 211 100% 45%;
+  --skill-viz: 211 100% 45%;
+  --skill-tools: 211 100% 45%;
+  --skill-ai: 211 100% 45%;
+  --skill-other: 211 100% 45%;
 
-  --destructive: 0 84% 60%;
-  --destructive-foreground: 210 40% 98%;
-
-  /* Skill Category Colors */
-  --skill-react: 195 82% 53%;
-  --skill-vue: 52 100% 50%;
-  --skill-viz: 271 91% 54%;
-  --skill-tools: 25 95% 53%;
-  --skill-ai: 279 69% 55%;
-  --skill-other: 214 88% 56%;
-
-  --portfolio-data-cockpit: 195 100% 45%;
-  --portfolio-management-system: 43 100% 58%;
-  --portfolio-portal-website: 282 85% 56%;
-  --portfolio-mini-program: 161 72% 47%;
+  --portfolio-data-cockpit: 211 100% 45%;
+  --portfolio-management-system: 211 100% 45%;
+  --portfolio-portal-website: 211 100% 45%;
+  --portfolio-mini-program: 211 100% 45%;
 }
 
 .dark {
-  --background: 222.2 84% 4.9%;
-  --foreground: 210 40% 98%;
+  --background: 240 6% 3%;
+  --foreground: 0 0% 98%;
 
-  --muted: 217.2 32.6% 17.5%;
-  --muted-foreground: 215 20.2% 65.1%;
+  --secondary: 240 4% 9%;
+  --secondary-foreground: 0 0% 98%;
 
-  --border: 217.2 32.6% 17.5%;
-  --input: 217.2 32.6% 17.5%;
-  --ring: 212.7 26.8% 83.9%;
+  --muted: 240 4% 12%;
+  --muted-foreground: 240 2% 65%;
 
-  --primary: 210 40% 98%;
-  --primary-foreground: 222.2 47.4% 11.2%;
+  --border: 240 4% 18%;
+  --input: 240 4% 18%;
+  --ring: 211 100% 55%;
 
-  --secondary: 217.2 32.6% 17.5%;
-  --secondary-foreground: 210 40% 98%;
+  --primary: 211 100% 55%;
+  --primary-foreground: 0 0% 100%;
 
-  --card: 222.2 84% 4.9%;
-  --card-foreground: 210 40% 98%;
+  --link: 211 100% 60%;
 
-  /* Accent & Semantic Colors (Dark) */
-  --accent: 262 80% 65%;
-  --accent-foreground: 222.2 84% 4.9%;
+  --card: 240 4% 9%;
+  --card-foreground: 0 0% 98%;
 
-  --success: 142 71% 55%;
-  --success-foreground: 222.2 84% 4.9%;
-
-  --warning: 38 92% 60%;
-  --warning-foreground: 222.2 84% 4.9%;
-
-  --destructive: 0 84% 70%;
-  --destructive-foreground: 222.2 84% 4.9%;
-
-  /* Skill Category Colors (Dark) */
-  --skill-react: 195 82% 63%;
-  --skill-vue: 52 100% 60%;
-  --skill-viz: 271 91% 64%;
-  --skill-tools: 25 95% 63%;
-  --skill-ai: 279 69% 65%;
-  --skill-other: 214 88% 66%;
-
-  --portfolio-data-cockpit: 195 100% 55%;
-  --portfolio-management-system: 43 100% 68%;
-  --portfolio-portal-website: 282 85% 66%;
-  --portfolio-mini-program: 161 72% 57%;
+  --nav-background: 0 0% 9% / 0.72;
 }
 
 html,
 body {
   height: 100%;
+  overflow-x: clip;
 }
 
 body {
   background-color: hsl(var(--background));
   color: hsl(var(--foreground));
+  font-family: var(--font-sans), -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+  font-size: 17px;
+  line-height: 1.47059;
+  letter-spacing: -0.022em;
+  -webkit-font-smoothing: antialiased;
 }
 
 * {
   border-color: hsl(var(--border));
 }
 
-/* Custom Animations */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-@keyframes slideUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes slideInLeft {
-  from {
-    opacity: 0;
-    transform: translateX(-20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-@keyframes slideInRight {
-  from {
-    opacity: 0;
-    transform: translateX(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-@keyframes float {
-  0%,
-  100% {
-    transform: translateY(0px);
-  }
-  50% {
-    transform: translateY(-10px);
-  }
-}
-
-@keyframes pulseGlow {
-  0%,
-  100% {
-    opacity: 1;
-    box-shadow: 0 0 20px rgba(99, 102, 241, 0.3);
-  }
-  50% {
-    opacity: 0.8;
-    box-shadow: 0 0 30px rgba(99, 102, 241, 0.5);
-  }
-}
-
-@keyframes shimmer {
-  0% {
-    background-position: -1000px 0;
-  }
-  100% {
-    background-position: 1000px 0;
-  }
-}
-
-/* Tailwind Utilities for Animations */
 @layer utilities {
-  .animate-fadeIn {
-    animation: fadeIn 0.6s ease-out;
+  .text-caption {
+    font-size: 12px;
+    line-height: 1.33337;
+    letter-spacing: -0.01em;
   }
 
-  .animate-slideUp {
-    animation: slideUp 0.6s ease-out;
+  .text-headline {
+    font-size: 21px;
+    line-height: 1.381;
+    letter-spacing: 0.011em;
   }
 
-  .animate-slideInLeft {
-    animation: slideInLeft 0.6s ease-out;
+  .text-hero {
+    font-size: clamp(2.5rem, 5vw, 4.5rem);
+    line-height: 1.05;
+    letter-spacing: -0.015em;
+    font-weight: 600;
   }
 
-  .animate-slideInRight {
-    animation: slideInRight 0.6s ease-out;
+  .apple-link {
+    color: hsl(var(--link));
+    font-size: 17px;
+    transition: opacity 160ms cubic-bezier(0.25, 0.1, 0.3, 1);
   }
 
-  .animate-float {
-    animation: float 3s ease-in-out infinite;
+  .apple-link:hover {
+    text-decoration: underline;
+    text-underline-offset: 4px;
   }
 
-  .animate-pulseGlow {
-    animation: pulseGlow 2s ease-in-out infinite;
+  .surface-secondary {
+    background-color: hsl(var(--secondary));
   }
 
-  /* Staggered animations for list items */
-  .animate-stagger > * {
-    animation: slideUp 0.6s ease-out;
+  .surface-tertiary {
+    background-color: hsl(var(--muted));
   }
 
-  .animate-stagger > *:nth-child(1) {
-    animation-delay: 0.05s;
+  .page-bleed {
+    margin-inline: -1.5rem;
+    width: auto;
   }
 
-  .animate-stagger > *:nth-child(2) {
-    animation-delay: 0.1s;
+  @media (min-width: 1024px) {
+    .page-bleed {
+      margin-inline: -5.625rem;
+    }
   }
 
-  .animate-stagger > *:nth-child(3) {
-    animation-delay: 0.15s;
+  /* Screen mockups */
+  .mockup-stage {
+    position: relative;
+    width: 100%;
   }
 
-  .animate-stagger > *:nth-child(4) {
-    animation-delay: 0.2s;
+  .mockup-display {
+    margin-inline: auto;
+    width: 100%;
   }
 
-  .animate-stagger > *:nth-child(5) {
-    animation-delay: 0.25s;
+  .mockup-display-lg {
+    max-width: 1080px;
   }
 
-  .animate-stagger > *:nth-child(6) {
-    animation-delay: 0.3s;
+  .mockup-display-sm {
+    max-width: 100%;
   }
 
-  /* Gradient text */
-  .bg-gradient-accent {
-    background: linear-gradient(
-      135deg,
-      hsl(var(--accent)) 0%,
-      hsl(262 80% 65%) 100%
-    );
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+  .mockup-display-bezel {
+    border-radius: 18px;
+    padding: 10px;
+    background: linear-gradient(180deg, #3a3a3c 0%, #1d1d1f 100%);
+    box-shadow:
+      0 24px 80px rgba(0, 0, 0, 0.45),
+      0 0 0 1px rgba(255, 255, 255, 0.08) inset;
   }
 
-  /* Gradient backgrounds for sections */
-  .bg-gradient-hero {
-    background: linear-gradient(
-      135deg,
-      hsl(var(--background)) 0%,
-      hsl(222.2 84% 4.9% / 0.05) 100%
-    );
+  .mockup-display-sm .mockup-display-bezel {
+    border-radius: 14px;
+    padding: 6px;
   }
 
-  .dark .bg-gradient-hero {
-    background: linear-gradient(
-      135deg,
-      hsl(var(--background)) 0%,
-      hsl(210 40% 98% / 0.05) 100%
-    );
+  .mockup-display-bezel > div {
+    border-radius: 10px;
+  }
+
+  .mockup-display-sm .mockup-display-bezel > div {
+    border-radius: 8px;
+  }
+
+  .mockup-display-chin {
+    height: 4px;
+    width: 18%;
+    margin: 10px auto 0;
+    border-radius: 999px;
+    background: #424245;
+  }
+
+  .mockup-display-stand {
+    width: 28%;
+    height: 28px;
+    margin: 0 auto;
+    border-radius: 0 0 12px 12px;
+    background: linear-gradient(180deg, #2c2c2e 0%, #1d1d1f 100%);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.35);
+  }
+
+  .mockup-display-sm .mockup-display-stand {
+    height: 16px;
+  }
+
+  .mockup-browser {
+    overflow: hidden;
+    border-radius: 14px;
+    background: #f5f5f7;
+    box-shadow:
+      0 20px 60px rgba(0, 0, 0, 0.28),
+      0 0 0 1px rgba(0, 0, 0, 0.06);
+  }
+
+  .mockup-browser-toolbar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-bottom: 1px solid #e8e8ed;
+    background: #fbfbfd;
+    padding: 10px 14px;
+  }
+
+  .mockup-traffic-lights {
+    display: flex;
+    gap: 7px;
+  }
+
+  .mockup-dot {
+    height: 10px;
+    width: 10px;
+    border-radius: 999px;
+  }
+
+  .mockup-dot-red {
+    background: #ff5f57;
+  }
+
+  .mockup-dot-yellow {
+    background: #febc2e;
+  }
+
+  .mockup-dot-green {
+    background: #28c840;
+  }
+
+  .mockup-browser-url {
+    flex: 1;
+    border-radius: 8px;
+    background: #fff;
+    padding: 6px 12px;
+    text-align: center;
+    font-size: 11px;
+    color: #6e6e73;
+    box-shadow: 0 0 0 1px #e8e8ed inset;
+  }
+
+  .mockup-phone {
+    position: relative;
+    width: min(72%, 280px);
+    border-radius: 36px;
+    padding: 10px;
+    background: linear-gradient(160deg, #4a4a4c 0%, #1d1d1f 55%, #000 100%);
+    box-shadow:
+      0 28px 70px rgba(0, 0, 0, 0.42),
+      0 0 0 1px rgba(255, 255, 255, 0.1) inset;
+  }
+
+  .mockup-phone > div:nth-child(2) {
+    border-radius: 28px;
+  }
+
+  .mockup-phone-island {
+    position: absolute;
+    top: 18px;
+    left: 50%;
+    z-index: 10;
+    height: 22px;
+    width: 84px;
+    transform: translateX(-50%);
+    border-radius: 999px;
+    background: #000;
+  }
+
+  .mockup-phone-home {
+    height: 4px;
+    width: 34%;
+    margin: 10px auto 4px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.35);
   }
 }

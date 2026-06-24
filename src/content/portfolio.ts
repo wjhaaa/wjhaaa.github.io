@@ -22,6 +22,7 @@ export type PortfolioItem = {
     result: string;
   };
   coverColor: string;
+  coverImage?: string;
   images?: string[];
 };
 
@@ -56,6 +57,7 @@ export const portfolio: PortfolioItem[] = [
         "最终产品获得客户认可，用户在关键指标页面的平均停留时间提升了18%。",
     },
     coverColor: "portfolio-data-cockpit",
+    coverImage: "/images/portfolio/5g.jpg",
     images: ["/images/portfolio/5g.jpg", "/images/portfolio/5g01.jpg"],
   },
   {
@@ -92,6 +94,7 @@ export const portfolio: PortfolioItem[] = [
       result: "系统查询响应时间从平均 3s 降低到 0.8s，用户满意度显著提升。",
     },
     coverColor: "portfolio-data-cockpit",
+    coverImage: "/images/portfolio/china.jpg",
     images: [
       "/images/portfolio/china.jpg",
       "/images/portfolio/china/wechat_2026-05-06_191718_569.png",
@@ -170,6 +173,7 @@ export const portfolio: PortfolioItem[] = [
       result: "模块化组件架构和清晰的代码组织结构，便于后续功能扩展和维护",
     },
     coverColor: "portfolio-data-cockpit",
+    coverImage: "/images/portfolio/changan/wechat_2026-05-08_170703_055.jpg",
     images: ["/images/portfolio/changan/wechat_2026-05-08_170703_055.jpg"],
   },
   {
@@ -261,7 +265,9 @@ export const portfolio: PortfolioItem[] = [
         "成功构建功能完整的企业碳管理平台，实现数据填报、分析、权限管理、国际化等核心功能，为企业碳排放管理提供可靠的技术支撑",
     },
     coverColor: "portfolio-management-system",
+    coverImage: "/images/portfolio/lvmh/wechat_2026-05-06_192435_592.jpg",
     images: [
+      "/images/portfolio/lvmh/wechat_2026-05-06_192435_592.jpg",
       "/images/portfolio/lvmh01.jpg",
       "/images/portfolio/lvmh/wechat_2026-05-06_192435_592.jpg",
       "/images/portfolio/lvmh/wechat_2026-05-06_192608_350.png",
@@ -664,3 +670,25 @@ export const portfolio: PortfolioItem[] = [
     ],
   },
 ];
+
+export const heroSlug = "data-cockpit-analytics" as const;
+
+export const gridSlugs = [
+  "data-cockpit-portal",
+  "data-cockpit-changan",
+  "management-system-suite",
+] as const;
+
+export function getHeroPortfolio() {
+  return portfolio.find((item) => item.slug === heroSlug);
+}
+
+export function getGridPortfolio() {
+  return gridSlugs
+    .map((slug) => portfolio.find((item) => item.slug === slug))
+    .filter((item): item is PortfolioItem => Boolean(item));
+}
+
+export function getFeaturedPortfolio() {
+  return getGridPortfolio();
+}

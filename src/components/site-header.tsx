@@ -1,46 +1,49 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { cn } from "@/lib/utils";
-import { ThemeToggle } from "@/components/theme-toggle";
-
-const nav = [
-  { href: "/about", label: "About" },
-  { href: "/portfolio", label: "Portfolio" },
-  { href: "/knowledge", label: "Knowledge" },
-];
+import { siteConfig } from "@/lib/site-config";
 
 export function SiteHeader() {
   const router = useRouter();
 
   return (
-    <header className="sticky top-0 z-40 border-b bg-[hsl(var(--background))]/80 backdrop-blur">
-      <div className="mx-auto flex h-14 max-w-5xl items-center justify-between px-4">
-        <Link href="/" className="font-semibold tracking-tight">
-          wjhaaa
+    <header className="sticky top-0 z-40 border-b border-transparent bg-[hsl(var(--nav-background))] backdrop-blur-xl supports-[backdrop-filter]:bg-[hsl(var(--nav-background))]">
+      <div className="mx-auto flex h-11 max-w-[1680px] items-center justify-between px-6 lg:px-[90px]">
+        <Link
+          href="/"
+          className="text-[14px] font-semibold tracking-tight text-[hsl(var(--foreground))]"
+        >
+          {siteConfig.name}
         </Link>
 
-        <nav className="flex items-center gap-1">
-          {nav.map((item) => {
+        <nav className="flex items-center gap-1 sm:gap-2">
+          {siteConfig.nav.map((item) => {
             const active =
               router.pathname === item.href ||
-              (item.href !== "/" && router.pathname.startsWith(item.href));
+              router.pathname.startsWith(`${item.href}/`);
             return (
               <Link
                 key={item.href}
                 href={item.href}
                 className={cn(
-                  "rounded-md px-3 py-2 text-sm text-[hsl(var(--muted-foreground))] hover:bg-[hsl(var(--muted))] hover:text-[hsl(var(--foreground))]",
-                  active && "text-[hsl(var(--foreground))]",
+                  "rounded-full px-3 py-1.5 text-[12px] transition-opacity duration-160",
+                  active
+                    ? "text-[hsl(var(--foreground))]"
+                    : "text-[hsl(var(--muted-foreground))] hover:text-[hsl(var(--foreground))]",
                 )}
               >
                 {item.label}
               </Link>
             );
           })}
-          <ThemeToggle />
+          <Link
+            href={siteConfig.resumePath}
+            className="hidden rounded-full px-3 py-1.5 text-[12px] text-[hsl(var(--link))] hover:underline sm:inline"
+          >
+            Resume
+          </Link>
         </nav>
       </div>
     </header>
   );
 }
-

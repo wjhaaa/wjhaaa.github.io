@@ -8,7 +8,7 @@ export function Card({
   return (
     <div
       className={cn(
-        "rounded-xl border border-[hsl(var(--border))] bg-[hsl(var(--card))] text-[hsl(var(--card-foreground))] shadow-sm",
+        "rounded-2xl bg-[hsl(var(--card))] text-[hsl(var(--card-foreground))]",
         className,
       )}
       {...props}
@@ -29,4 +29,3 @@ export function CardContent({
 }: React.HTMLAttributes<HTMLDivElement>) {
   return <div className={cn("p-6 pt-4", className)} {...props} />;
 }
-

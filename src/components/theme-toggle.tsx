@@ -5,9 +5,13 @@ import { Button } from "@/components/ui/button";
 
 export function ThemeToggle() {
   const { theme, setTheme } = useTheme();
-  const [mounted] = React.useState(() => typeof window !== "undefined");
+  const [mounted, setMounted] = React.useState(false);
 
-  const isDark = mounted ? theme === "dark" : false;
+  React.useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  const isDark = mounted && theme === "dark";
 
   return (
     <Button
@@ -18,7 +22,7 @@ export function ThemeToggle() {
       onClick={() => setTheme(isDark ? "light" : "dark")}
       className="px-2"
     >
-      <Sun className="h-4 w-4" />
+      {isDark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
     </Button>
   );
 }

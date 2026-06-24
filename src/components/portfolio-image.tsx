@@ -21,21 +21,21 @@ export function PortfolioImage({
   priority = false,
   fill = false,
 }: PortfolioImageProps) {
-  const [isLoading, setIsLoading] = useState(true);
-  const [hasError, setHasError] = useState(false);
+  const [isLoading, setIsLoading] = useState(Boolean(src));
+  const [hasError, setHasError] = useState(!src);
 
-  if (hasError) {
+  if (hasError || !src) {
     return (
       <div
         className={cn(
-          "bg-[hsl(var(--muted))] flex items-center justify-center",
+          "surface-tertiary flex items-center justify-center",
           fill ? "absolute inset-0" : "",
           className,
         )}
         style={!fill ? { width, height } : undefined}
       >
-        <span className="text-sm text-[hsl(var(--muted-foreground))]">
-          Image not available
+        <span className="text-caption text-[hsl(var(--muted-foreground))]">
+          Preview coming soon
         </span>
       </div>
     );
@@ -44,18 +44,16 @@ export function PortfolioImage({
   return (
     <div
       className={cn(
-        "relative overflow-hidden bg-[hsl(var(--muted))]",
-        fill ? "w-full h-full" : "",
+        "relative overflow-hidden surface-tertiary",
+        fill ? "h-full w-full" : "",
         className,
       )}
       style={!fill ? { width, height } : undefined}
     >
-      {/* Skeleton loader */}
-      {isLoading && (
-        <div className="absolute inset-0 bg-gradient-to-r from-[hsl(var(--muted))] via-[hsl(var(--card))] to-[hsl(var(--muted))] bg-[length:200%_100%] animate-pulse" />
-      )}
+      {isLoading ? (
+        <div className="absolute inset-0 animate-pulse bg-[hsl(var(--muted))]" />
+      ) : null}
 
-      {/* Image */}
       <Image
         src={src}
         alt={alt}
