@@ -699,6 +699,12 @@ export const gridSlugs = [
   "management-system-suite",
 ] as const;
 
+export const heroCarouselSlugs = [
+  "data-cockpit-analytics",
+  "management-system-suite",
+  "data-cockpit-portal",
+] as const;
+
 export const homeCaseSlugs = [
   "data-cockpit-analytics",
   "management-system-suite",
@@ -706,6 +712,12 @@ export const homeCaseSlugs = [
 
 export function getHeroPortfolio() {
   return portfolio.find((item) => item.slug === heroSlug);
+}
+
+export function getHeroCarouselItems() {
+  return heroCarouselSlugs
+    .map((slug) => portfolio.find((item) => item.slug === slug))
+    .filter((item): item is PortfolioItem => Boolean(item));
 }
 
 export function getHomeCaseStudies() {
