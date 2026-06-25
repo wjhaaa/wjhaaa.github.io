@@ -736,6 +736,23 @@ export function getHomeCaseStudies() {
     .filter((item): item is PortfolioItem => Boolean(item));
 }
 
+export function getClientNameForSlug(slug: string) {
+  return heroClients.find((client) => client.slug === slug)?.name;
+}
+
+export function getPortfolioNeighbors(slug: string) {
+  const item = portfolio.find((entry) => entry.slug === slug);
+  if (!item) return { prev: null, next: null };
+
+  const siblings = portfolio.filter((entry) => entry.category === item.category);
+  const index = siblings.findIndex((entry) => entry.slug === slug);
+
+  return {
+    prev: index > 0 ? siblings[index - 1]! : null,
+    next: index < siblings.length - 1 ? siblings[index + 1]! : null,
+  };
+}
+
 export function getGridPortfolio() {
   return gridSlugs
     .map((slug) => portfolio.find((item) => item.slug === slug))

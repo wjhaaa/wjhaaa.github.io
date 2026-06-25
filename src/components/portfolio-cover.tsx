@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 import type { PortfolioCategory, PortfolioItem } from "@/content/portfolio";
@@ -19,7 +20,7 @@ type PortfolioCoverProps = {
   };
   className?: string;
   priority?: boolean;
-  variant?: "card" | "stage";
+  variant?: "card" | "stage" | "thumb";
 };
 
 export function PortfolioCover({
@@ -61,6 +62,29 @@ export function PortfolioCover({
           priority={priority}
           onError={() => setHasError(true)}
         />
+      </div>
+    );
+  }
+
+  if (variant === "thumb") {
+    return (
+      <div
+        className={cn(
+          "overflow-hidden rounded-xl border border-[hsl(var(--border))]/80 bg-[#0a0a0a] transition-[transform,box-shadow] duration-300 group-hover:border-[hsl(var(--border))] group-hover:shadow-[0_12px_40px_rgba(0,0,0,0.35)]",
+          className,
+        )}
+      >
+        <div className="relative aspect-[16/10] w-full">
+          <Image
+            src={src}
+            alt={item.title}
+            fill
+            priority={priority}
+            onError={() => setHasError(true)}
+            className="object-cover object-top"
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+          />
+        </div>
       </div>
     );
   }
