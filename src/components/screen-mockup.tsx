@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { cn } from "@/lib/utils";
+import { getPortfolioImageSrc } from "@/lib/portfolio-image-src";
 import type { PortfolioCategory } from "@/content/portfolio";
 
 export type MockupVariant = "display" | "browser" | "phone";
@@ -14,6 +15,7 @@ type ScreenMockupProps = {
   alt: string;
   variant?: MockupVariant;
   priority?: boolean;
+  imageVariant?: "card" | "stage";
   className?: string;
   onError?: () => void;
 };
@@ -22,6 +24,7 @@ function MockupScreen({
   src,
   alt,
   priority,
+  imageVariant = "stage",
   onError,
   className,
   objectPosition = "top",
@@ -29,23 +32,32 @@ function MockupScreen({
   src: string;
   alt: string;
   priority?: boolean;
+  imageVariant?: "card" | "stage";
   onError?: () => void;
   className?: string;
   objectPosition?: "top" | "center";
 }) {
+  const resolvedSrc = getPortfolioImageSrc(src, imageVariant);
+
   return (
     <div className={cn("relative w-full overflow-hidden bg-[#0a0a0a]", className)}>
       <Image
-        src={src}
+        src={resolvedSrc}
         alt={alt}
         fill
         priority={priority}
+        loading={priority ? "eager" : "lazy"}
+        decoding="async"
         onError={onError}
         className={cn(
           "object-cover",
           objectPosition === "top" ? "object-top" : "object-center",
         )}
-        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 1200px"
+        sizes={
+          imageVariant === "card"
+            ? "(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+            : "(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 1200px"
+        }
       />
     </div>
   );
@@ -58,6 +70,7 @@ function DisplayMockup({
   onError,
   className,
   size = "lg",
+  imageVariant = "stage",
 }: ScreenMockupProps & { size?: "lg" | "sm" }) {
   return (
     <div className={cn("mockup-stage", className)}>
@@ -72,6 +85,7 @@ function DisplayMockup({
             src={src}
             alt={alt}
             priority={priority}
+            imageVariant={imageVariant}
             onError={onError}
             className="aspect-[16/10]"
           />
@@ -87,6 +101,7 @@ function BrowserMockup({
   src,
   alt,
   priority,
+  imageVariant = "stage",
   onError,
   className,
 }: ScreenMockupProps) {
@@ -107,6 +122,7 @@ function BrowserMockup({
           src={src}
           alt={alt}
           priority={priority}
+          imageVariant={imageVariant}
           onError={onError}
           className="aspect-[16/10]"
         />
@@ -119,6 +135,7 @@ function PhoneMockup({
   src,
   alt,
   priority,
+  imageVariant = "stage",
   onError,
   className,
 }: ScreenMockupProps) {
@@ -130,6 +147,7 @@ function PhoneMockup({
           src={src}
           alt={alt}
           priority={priority}
+          imageVariant={imageVariant}
           onError={onError}
           className="aspect-[9/19.5]"
           objectPosition="top"
@@ -185,13 +203,15 @@ export function ScreenMockup({
 }
 
 export function ScreenMockupCompact(props: ScreenMockupProps) {
-  if (props.variant === "phone") {
-    return <PhoneMockup {...props} />;
+  const compactProps = { ...props, imageVariant: "card" as const };
+
+  if (compactProps.variant === "phone") {
+    return <PhoneMockup {...compactProps} />;
   }
 
-  if (props.variant === "browser") {
-    return <BrowserMockup {...props} />;
+  if (compactProps.variant === "browser") {
+    return <BrowserMockup {...compactProps} />;
   }
 
-  return <DisplayMockup {...props} size="sm" />;
+  return <DisplayMockup {...compactProps} size="sm" />;
 }

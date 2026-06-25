@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
+import { getPortfolioImageSrc } from "@/lib/portfolio-image-src";
 import type { PortfolioCategory, PortfolioItem } from "@/content/portfolio";
 import {
   mockupForCategory,
@@ -76,10 +77,12 @@ export function PortfolioCover({
       >
         <div className="relative aspect-[16/10] w-full">
           <Image
-            src={src}
+            src={getPortfolioImageSrc(src, "thumb")}
             alt={item.title}
             fill
             priority={priority}
+            loading={priority ? "eager" : "lazy"}
+            decoding="async"
             onError={() => setHasError(true)}
             className="object-cover object-top"
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
