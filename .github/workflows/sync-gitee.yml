@@ -20,7 +20,9 @@ jobs:
           node-version: 20
           cache: pnpm
 
-      - name: Install and build
+      - name: Install and build for Gitee (/portfolio subpath)
+        env:
+          NEXT_PUBLIC_BASE_PATH: /portfolio
         run: |
           pnpm install --frozen-lockfile
           pnpm build
@@ -28,14 +30,11 @@ jobs:
       - name: Push static site to Gitee
         env:
           GITEE_TOKEN: ${{ secrets.GITEE_TOKEN }}
-          GITEE_USERNAME: ${{ secrets.GITEE_USERNAME }}
-          GITEE_REPO: ${{ secrets.GITEE_REPO }}
         run: |
-          REPO="${GITEE_REPO:-wjhaaa.github.io}"
           cd out
           git init -b master
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add .
-          git commit -m "deploy: ${GITHUB_SHA::7}"
-          git push -f "https://${GITEE_USERNAME}:${GITEE_TOKEN}@gitee.com/${GITEE_USERNAME}/${REPO}.git" master
+          git commit -m "deploy: ${GITHUB_SHA:0:7}"
+          git push -f "https://workhrad:${GITEE_TOKEN}@gitee.com/workhrad/portfolio.git" master

@@ -56,6 +56,16 @@ export function SiteFooter() {
                   邮箱
                 </a>
               </li>
+              <li>
+                <a
+                  href={siteConfig.mirrorUrl}
+                  className="apple-link"
+                  target="_blank"
+                  rel="noreferrer noopener"
+                >
+                  国内镜像
+                </a>
+              </li>
             </ul>
           </div>
           <div className="space-y-3">

@@ -3,6 +3,8 @@ export const siteConfig = {
   nameZh: "王佳慧",
   domain: "wjhaaa.github.io",
   url: "https://wjhaaa.github.io",
+  mirrorUrl: "https://workhrad.gitee.io/portfolio/",
+  giteeRepo: "https://gitee.com/workhrad/portfolio",
   ogImage: "/images/portfolio/china.jpg",
   avatarPath: "/avatar.jpg" as string | undefined,
   title: "Frontend Engineer",
